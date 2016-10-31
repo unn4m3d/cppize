@@ -1,0 +1,19 @@
+module Cppize
+  class Transpiler
+    def transpile(node : Var, should_return : Bool = false)
+      found = find_var node.name
+      result = ""
+      case found[:symbol_type]
+      when :undefined
+        result = "auto "
+        @scopes.push Scope.new if @scopes.size < 1
+        @scopes.first[node.name] = {symbol_type: :variable, value: node}
+      when :variable
+      else
+        raise Error.new("Cannot use non-variable as variable")
+      end
+      result += node.name
+      result
+    end
+  end
+end
