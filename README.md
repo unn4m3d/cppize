@@ -13,11 +13,11 @@ Crystal-to-C++ transpiler [WIP]
 
 #### Implementing nodes
 
-See [src/nodes/expressions.cr](src/nodes/expressions.cr) for example
+See [src/cppize/nodes/expressions.cr](src/cppize/nodes/expressions.cr) for example
 
 #### Adding transpile-time macros
 
-See [src/macros/\_\_cpp\_\_.cr](src/macros/__cpp__.cr) for example
+See [src/cppize/macros/\_\_cpp\_\_.cr](src/cppize/macros/__cpp__.cr) for example
 
 ## Contributing
 
