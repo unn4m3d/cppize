@@ -2,6 +2,8 @@
 
 Crystal-to-C++ transpiler [WIP]
 
+Generated code can be compiled with c++14 compiler (tested with g++ 6.2.0)
+
 ## Usage
 
 1. Compile `src/compiler_test.cr`
