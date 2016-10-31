@@ -5,7 +5,7 @@ Crystal-to-C++ transpiler [WIP]
 ## Usage
 
 1. Compile `src/compiler_test.cr`
-2. Launch the executable like `my_executable my_file.cr`, where `my_file.cr` is the name of the Crystal source
+2. Launch the executable like `my_executable my_file.cr`, (`my_file.cr` is the name of the Crystal source)
 3. C++ output will be printed to stdout
 
 
@@ -17,7 +17,7 @@ See [src/nodes/expressions.cr](src/nodes/expressions.cr) for example
 
 #### Adding transpile-time macros
 
-See [src/macros/__cpp__.cr](src/nodes/__cpp__.cr) for example
+See [src/macros/\_\_cpp\_\_.cr](src/nodes/__cpp__.cr) for example
 
 ## Contributing
 
