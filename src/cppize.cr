@@ -14,6 +14,7 @@ require "./cppize/nodes/*"
 # require "compiler/crystal/codegen/target_machine"
 # require "compiler/crystal/crystal_path"
 require "compiler/crystal/**"
+# require "cppize/inference/*"
 require "llvm/**" # For compiler/crystal/semantic/***
 
 class Crystal::Program
@@ -29,6 +30,9 @@ module Cppize
     @scopes = Array(Scope).new
 
     def find_var(name : String) : NamedTuple(symbol_type: Symbol, value: ASTNode?)
+      if name == "self"
+        return {symbol_type: :pointer, value: nil}
+      end
       @scopes.each do |h|
         if h.has_key? name
           return h[name]
@@ -48,6 +52,7 @@ module Cppize
       "Int", "Int8", "Int16", "Int32", "Int64",
       "UInt", "UInt8", "UInt16", "UInt32", "UInt64",
       "Char", "String", "Array", "StaticArray", "Pointer",
+      "Size", "Object", "Hash",
     ]
 
     BUILTIN_TYPES = [

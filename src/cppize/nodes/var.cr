@@ -8,9 +8,9 @@ module Cppize
         result = "auto "
         @scopes.push Scope.new if @scopes.size < 1
         @scopes.first[node.name] = {symbol_type: :variable, value: node}
-      when :variable
+      when :object || :pointer || :primitive
       else
-        raise Error.new("Cannot use non-variable as variable")
+        # raise Error.new("Cannot use non-variable as variable")
       end
       result += node.name
       result

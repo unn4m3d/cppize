@@ -5,7 +5,7 @@ module Cppize
     end
 
     def transpile(node : StringLiteral, should_return : Bool = false)
-      (should_return ? "return " : "") + "\"#{escape_cpp_string node.value}\"_str"
+      (should_return ? "return " : "") + "\"#{escape_cpp_string node.value}\"_crstr"
     end
   end
 end

@@ -1,8 +1,8 @@
 module Cppize
   class Lines
-    property failsafe : Bool
+    property? failsafe : Bool
 
-    def initialize(@failsafe = false, &block : Lines -> _)
+    def initialize(@failsafe = true, &block : Lines -> _)
       @ident = 0
       @code = ""
       block.call self
