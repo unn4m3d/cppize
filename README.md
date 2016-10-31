@@ -1,26 +1,27 @@
 # cppize
 
-TODO: Write a description here
-
-## Installation
-
-
-TODO: Write installation instructions here
-
+Crystal-to-C++ transpiler [WIP]
 
 ## Usage
 
+1. Compile `src/compiler_test.cr`
+2. Launch the executable like `my_executable my_file.cr`, where `my_file.cr` is the name of the Crystal source
+3. C++ output will be printed to stdout
 
-
-TODO: Write usage instructions here
 
 ## Development
 
-TODO: Write development instructions here
+#### Implementing nodes
+
+See [src/nodes/expressions.cr](src/nodes/expressions.cr) for example
+
+#### Adding transpile-time macros
+
+See [src/macros/__cpp__.cr](src/nodes/__cpp__.cr) for example
 
 ## Contributing
 
-1. Fork it ( https://github.com/[your-github-name]/cppize/fork )
+1. Fork it ( https://github.com/unn4m3d/cppize/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
@@ -28,4 +29,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [[your-github-name]](https://github.com/[your-github-name]) unn4m3d - creator, maintainer
+- [unn4m3d](https://github.com/unn4m3d) unn4m3d - creator, maintainer

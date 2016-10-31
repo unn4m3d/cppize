@@ -5,5 +5,6 @@ __cpp__ "typedef int nativeint;"
 
 def main : NativeInt
   s = "HelloWorld"
+  s = "Hello World"
   printf "%s\n", s
 end
