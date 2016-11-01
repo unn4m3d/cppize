@@ -9,6 +9,8 @@ enum TestEnum
   Three
 end
 
+__comment__ "LOL"
+
 def main : NativeInt
   s : Pointer(Char)
   s = "HelloWorld"
@@ -23,4 +25,16 @@ def main : NativeInt
   unless s
     printf "h\n"
   end
+
+  while 0
+    printf "0\n"
+    break
+  end
+
+  until 0
+    printf "1\n"
+    next
+  end
+
+  return 0
 end
