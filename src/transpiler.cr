@@ -4,7 +4,7 @@ transpiler = Cppize::Transpiler.new
 code = ""
 input = ""
 use_stdin = false
-output : String? = nil
+output = nil
 use_stdout = false
 
 OptionParser.parse! do |opts|
@@ -83,5 +83,5 @@ code += transpiler.parse_and_transpile(input_c)
 if use_stdout
   puts code
 else
-  File.open(output, "w") { |f| f.puts(code) }
+  File.open(output.to_s, "w") { |f| f.puts(code) }
 end

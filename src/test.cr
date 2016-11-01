@@ -14,5 +14,13 @@ def main : NativeInt
   s = "HelloWorld"
   s = "Hello World"
   s += "s"
-  printf "%s\n", s
+  if "Hello"
+    printf "%s\n", s
+  else
+    printf "world\n"
+  end
+
+  unless s
+    printf "h\n"
+  end
 end
