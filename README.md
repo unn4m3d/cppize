@@ -9,7 +9,7 @@ Generated code can be compiled with c++14 compiler (tested with g++ 6.2.0)
 1. Compile `src/cppize/transpiler.cr` (it may take some time as it `require`s Crystal parser)
 2. Launch compiled executable with `-h` flag to view all command line flags
 
-**These features are currently not doing anything as they are only adding #define's to the beginning of source code**
+**These features are currently not doing anything as they are just adding #define's to the beginning of source code**
 Supported features (`-f...`) :
 * `-fno-rtti` - disables RTTI
 * `-fno-exceptions` - disables exceptions (*Currently not implemented*)
