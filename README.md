@@ -6,8 +6,8 @@ Generated code can be compiled with c++14 compiler (tested with g++ 6.2.0)
 
 ## Usage
 
-1.Compile `src/cppize/transpiler.cr` (it may take some time as it `require`s Crystal parser)
-2.Launch compiled executable with `-h` flag to view all command line flags
+1. Compile `src/cppize/transpiler.cr` (it may take some time as it `require`s Crystal parser)
+2. Launch compiled executable with `-h` flag to view all command line flags
 
 
 ## Development
