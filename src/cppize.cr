@@ -25,6 +25,10 @@ module Cppize
   include Crystal
 
   class Transpiler
+    property options
+
+    @options = Hash(String, String?).new
+
     alias Scope = Hash(String, NamedTuple(symbol_type: Symbol, value: ASTNode?))
 
     @scopes = Array(Scope).new

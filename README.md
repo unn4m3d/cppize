@@ -6,9 +6,8 @@ Generated code can be compiled with c++14 compiler (tested with g++ 6.2.0)
 
 ## Usage
 
-1. Compile `src/compiler_test.cr`
-2. Launch the executable like `my_executable my_file.cr`, (`my_file.cr` is the name of the Crystal source)
-3. C++ output will be printed to stdout
+1.Compile `src/cppize/transpiler.cr` (it may take some time as it `require`s Crystal parser)
+2.Launch compiled executable with `-h` flag to view all command line flags
 
 
 ## Development
