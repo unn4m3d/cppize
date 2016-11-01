@@ -9,6 +9,13 @@ Generated code can be compiled with c++14 compiler (tested with g++ 6.2.0)
 1. Compile `src/cppize/transpiler.cr` (it may take some time as it `require`s Crystal parser)
 2. Launch compiled executable with `-h` flag to view all command line flags
 
+Supported features (`-f...`) :
+* `-fno-rtti` - disables RTTI
+* `-fno-exceptions` - disables exceptions (*Currently not implemented*)
+* `-fno-stdlib` - disables stdlib
+* `-fno-std-string` - tells to use own implementation of string instead of `std::string`
+* `-fprimitive-types` - tells to use primitive types such as `int` instead of stdlib object-oriented implementations
+
 
 ## Development
 

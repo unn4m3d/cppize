@@ -70,8 +70,18 @@ module Cppize
 */
     )
 
+    def initial_defines
+      lines = [] of String
+      lines << "#define CPPIZE_NO_RTTI" if options.has_key? "no-rtti"
+      lines << "#define CPPIZE_USE_PRIMITIVE_TYPES" if options.has_key? "primitive-types"
+      lines << "#define CPPIZE_NO_EXCEPTIONS" if options.has_key? "no-exceptions"
+      lines << "#define CPPIZE_NO_STD_STRING" if options.has_key? "no-std-string"
+      lines << "#include <crystal/stdlib.hpp>" unless options.has_key? "no-stdlib"
+      lines.join("\n")
+    end
+
     def parse_and_transpile(code : String)
-      COMMENT + "\n" + transpile Parser.parse(code)
+      initial_defines + "\n" + COMMENT + "\n" + transpile Parser.parse(code)
     end
 
     def parse_and_transpile(file : IO)

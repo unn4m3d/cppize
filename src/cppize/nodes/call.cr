@@ -11,9 +11,10 @@ module Cppize
     CPP_OPERATORS = %w(+ - * / % >> << >= <= > < == != & && | || ^)
 
     ADDITIONAL_OPERATORS = {
-      "===" => "equals",
-      "=~"  => "find",
-      "<=>" => "diff",
+      "==="   => "equals",
+      "=~"    => "find",
+      "<=>"   => "diff",
+      "class" => "get_type",
     }
 
     def transpile(node : Call, should_return : Bool = false)
@@ -25,7 +26,11 @@ module Cppize
             "(#{transpile node.obj} #{node.name} #{transpile node.args.first})"
           else
             name = ADDITIONAL_OPERATORS.has_key?(node.name) ? ADDITIONAL_OPERATORS[node.name] : node.name
-            "(#{transpile node.obj}.#{name}(#{node.args.map { |x| transpile x }.join(", ")})"
+            if node.obj.is_a? Self
+              "this->#{name}(#{node.args.map { |x| transpile x }.join(", ")})"
+            else
+              "(#{transpile node.obj}.#{name}(#{node.args.map { |x| transpile x }.join(", ")})"
+            end
           end
         else
           if @@macros.has_key? node.name
