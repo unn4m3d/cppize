@@ -13,7 +13,7 @@ Supported features (`-f...`) :
 * `-fno-rtti` - disables RTTI
 * `-fno-exceptions` - disables exceptions (*Currently not implemented*)
 * `-fno-stdlib` - disables stdlib
-* `-fno-std-string` - tells to use own implementation of string instead of `std::string`
+* `-fno-std-string` - tells to use own implementation of string instead of `std::string` (*Currently not implemented*)
 * `-fprimitive-types` - tells to use primitive types such as `int` instead of stdlib object-oriented implementations
 
 
