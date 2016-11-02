@@ -20,6 +20,7 @@ namespace Crystal
     virtual Type get_type();
   #endif
 
+    virtual const char* to_s();
   };
 
   #ifndef CPPIZE_NO_RTTI
@@ -42,7 +43,16 @@ namespace Crystal
   {
     return Type(&typeid(*this));
   }
-  #endif
+  #endif // CPPIZE_NO_RTTI
+
+  const char* Object::to_s()
+  {
+    #ifdef CPPIZE_NO_RTTI
+      return "Crystal::Object";
+    #else
+      return get_type().name();
+    #endif // CPPIZE_NO_RTTI
+  }
 
   #ifdef CPPIZE_USE_PRIMITIVE_TYPES
     template<typename T = int> 
@@ -137,7 +147,12 @@ namespace Crystal
         Numeric<T> (storage ^ other);
       }
 
-    private:
+      operator T()
+      {
+        return storage;
+      }
+
+    protected:
       T storage;
     };
 
@@ -160,7 +175,25 @@ namespace Crystal
   using Float64 = Numeric<double>;
   using LongFloat = Numeric<long double>;
 
+  template<typename T>
+  class Pointer : public Numeric<T*>
+  {
+  public:
+    T& value()
+    {
+      return *(Numeric<T>::storage);
+    }
 
+    Pointer(T *value)
+    {
+      Numeric<T>::storage = value;
+    }
+  };
+
+  template<typename T> inline Pointer<T> pointerof(T value)
+  {
+    return Pointer<T>(&value);
+  }
 }
 
 #include <crystal/literals.hpp>
