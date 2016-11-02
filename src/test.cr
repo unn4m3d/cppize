@@ -13,9 +13,14 @@ __comment__ "LOL"
 
 # -*inline*-
 module MyNamespace
-  def fuck(c : Char) : String
+  def lol(c : Char) : String
     c.to_s
   end
+end
+
+lib A_Lib
+  fun a(i : Int32) : Void
+  fun b = "c"(i : Float64) : Float32
 end
 
 def main : NativeInt
