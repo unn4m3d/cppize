@@ -76,6 +76,7 @@ module Cppize
       lines << "#define CPPIZE_USE_PRIMITIVE_TYPES" if options.has_key? "primitive-types"
       lines << "#define CPPIZE_NO_EXCEPTIONS" if options.has_key? "no-exceptions"
       lines << "#define CPPIZE_NO_STD_STRING" if options.has_key? "no-std-string"
+      lines << "#define CPPIZE_NEW_AS_METHOD" if options.has_key? "new-as-method"
       lines << "#include <crystal/stdlib.hpp>" unless options.has_key? "no-stdlib"
       lines.join("\n")
     end
