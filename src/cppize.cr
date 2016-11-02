@@ -56,7 +56,8 @@ module Cppize
       "Int", "Int8", "Int16", "Int32", "Int64",
       "UInt", "UInt8", "UInt16", "UInt32", "UInt64",
       "Char", "String", "Array", "StaticArray", "Pointer",
-      "Size", "Object", "Hash",
+      "Size", "Object", "Hash", "Numeric", "Float",
+      "Float32", "Float64", "LongFloat",
     ]
 
     BUILTIN_TYPES = [
