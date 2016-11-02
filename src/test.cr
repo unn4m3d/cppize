@@ -11,6 +11,13 @@ end
 
 __comment__ "LOL"
 
+# -*inline*-
+module MyNamespace
+  def fuck(c : Char) : String
+    c.to_s
+  end
+end
+
 def main : NativeInt
   s : Pointer(Char)
   s = "HelloWorld"
