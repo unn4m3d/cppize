@@ -14,6 +14,7 @@ module Cppize
       "==="   => "equals",
       "=~"    => "find",
       "<=>"   => "diff",
+      "**"    => "pow",
       "class" => "get_type",
     }
 
