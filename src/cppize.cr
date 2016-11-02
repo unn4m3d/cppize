@@ -117,7 +117,7 @@ module Cppize
       if _n.match(/\|/)
         raise Error.new("Union types are not supported yet (type #{_n})")
       elsif CORE_TYPES.includes?(_n)
-        "crystal::#{_n.downcase}"
+        "crystal::#{_n}"
       elsif BUILTIN_TYPES.includes?(_n)
         _n.downcase
       else
