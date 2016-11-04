@@ -1,15 +1,14 @@
 module Cppize
   class Transpiler
     def transpile(node : LibDef, should_return : Bool = false)
-      Lines.new @failsafe do |l|
-        l.block "namespace #{node.name}" do
-          begin
-            l.line transpile node.body
-          rescue ex : Error
-            l.line("#error #{ex}")
-          end
+      @lib_defs.block "namespace #{node.name}" do
+        begin
+          @lib_defs.line transpile node.body
+        rescue ex : Error
+          @lib_defs.line("#error #{ex}")
         end
-      end.to_s
+      end
+      ""
     end
 
     def transpile(node : String)
