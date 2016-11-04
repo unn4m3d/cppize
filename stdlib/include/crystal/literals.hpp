@@ -39,3 +39,7 @@ Crystal::Float32 operator"" _crf32 (const long double input){
 Crystal::Float64 operator"" _crf64 (const long double input){
   return Crystal::Float64((double)input);
 }
+
+Crystal::Bool operator""_crbool(const char t){
+  return Crystal::Bool((const bool) t);
+}
