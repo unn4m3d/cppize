@@ -39,7 +39,7 @@ module Cppize
             if node.obj.is_a? Self
               "this->#{name}(#{node.args.map { |x| transpile x }.join(", ")})"
             else
-              "(#{transpile node.obj}.#{name}(#{node.args.map { |x| transpile x }.join(", ")})"
+              "(#{transpile node.obj}.#{name}(#{node.args.map { |x| transpile x }.join(", ")}))"
             end
           end
         else
