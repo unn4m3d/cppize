@@ -11,6 +11,12 @@ module MyNamespace
   def lol(c : Char) : String
     c.to_s
   end
+
+  module MyOtherNamespace
+    def lol2(c : Char) : String
+      c.to_s
+    end
+  end
 end
 
 lib A_Lib
