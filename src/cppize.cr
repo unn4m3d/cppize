@@ -1,20 +1,7 @@
 require "./cppize/*"
 require "./cppize/nodes/*"
-# require "compiler/crystal/program"
-# require "compiler/crystal/semantic/**"
-# require "compiler/crystal/macros"
-# require "compiler/crystal/macros/**"
-# require "compiler/crystal/syntax/**"
-# require "compiler/crystal/tools/**"
-# require "compiler/crystal/semantic/ast"
-# require "compiler/crystal/semantic/type_lookup"
-# require "compiler/crystal/semantic/class_vars_initializer_visitor"
-# require "compiler/crystal/semantic/method_lookup"
-# require "compiler/crystal/codegen/link"
-# require "compiler/crystal/codegen/target_machine"
-# require "compiler/crystal/crystal_path"
+
 require "compiler/crystal/**"
-# require "cppize/inference/*"
 require "llvm/**" # For compiler/crystal/semantic/***
 
 class Crystal::Program
