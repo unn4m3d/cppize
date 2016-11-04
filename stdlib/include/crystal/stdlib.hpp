@@ -16,6 +16,7 @@ namespace Crystal
   class Object
   {
   public:
+    using unsafe_type = void;
   #ifndef CPPIZE_NO_RTTI
     virtual Type get_type();
   #endif
@@ -62,6 +63,8 @@ namespace Crystal
     class Numeric : public Object
     { 
     public:
+      using unsafe_type = T;
+
       Numeric(T data)
       {
         storage = data;
@@ -109,42 +112,117 @@ namespace Crystal
 
       Numeric<T> operator +(T other)
       {
-        Numeric<T>(storage + other);
+        return Numeric<T>(storage + other);
       }
 
       Numeric<T> operator -(T other)
       {
-        Numeric<T>(storage - other);
+        return Numeric<T>(storage - other);
       }
 
       Numeric<T> operator *(T other)
       {
-        Numeric<T>(storage * other);
+        return Numeric<T>(storage * other);
       }
 
       Numeric<T> operator /(T other)
       {
-        Numeric<T>(storage / other);
+        return Numeric<T>(storage / other);
       }
 
       Numeric<T> operator %(T other)
       {
-        Numeric<T>(storage % other);
+        return Numeric<T>(storage % other);
       }
 
       Numeric<T> operator &(T other)
       {
-        Numeric<T>(storage & other);
+        return Numeric<T>(storage & other);
       }
 
       Numeric<T> operator |(T other)
       {
-        Numeric<T>(storage | other);
+        return Numeric<T>(storage | other);
       }
 
       Numeric<T> operator ^(T other)
       {
-        Numeric<T> (storage ^ other);
+        return Numeric<T> (storage ^ other);
+      }
+
+      Numeric<T> operator -()
+      {
+        return Numeric<T>(-storage);
+      }
+
+       bool operator ==(Numeric<T> data)
+      {
+        return data.storage == storage;
+      }
+
+      bool operator !=(Numeric<T> data)
+      {
+        return data.storage != storage;
+      }
+
+      bool operator >(Numeric<T> data)
+      {
+        return storage > data.storage;
+      }
+
+      bool operator <(Numeric<T> data)
+      {
+        return storage < data.storage;
+      }
+
+      bool operator >=(Numeric<T> data)
+      {
+        return storage >= data.storage;
+      }
+
+      bool operator <=(Numeric<T> data)
+      {
+        return storage <= data.storage;
+      }
+
+      Numeric<T> operator +(Numeric<T> other)
+      {
+        return Numeric<T>(storage + other.storage);
+      }
+
+      Numeric<T> operator -(Numeric<T> other)
+      {
+        return Numeric<T>(storage - other.storage);
+      }
+
+      Numeric<T> operator *(Numeric<T> other)
+      {
+        return Numeric<T>(storage * other.storage);
+      }
+
+      Numeric<T> operator /(Numeric<T> other)
+      {
+        return Numeric<T>(storage / other.storage);
+      }
+
+      Numeric<T> operator %(Numeric<T> other)
+      {
+        return Numeric<T>(storage % other.storage);
+      }
+
+      Numeric<T> operator &(Numeric<T> other)
+      {
+        return Numeric<T>(storage & other.storage);
+      }
+
+      Numeric<T> operator |(Numeric<T> other)
+      {
+        return Numeric<T>(storage | other.storage);
+      }
+
+      Numeric<T> operator ^(Numeric<T> other)
+      {
+        return Numeric<T> (storage ^ other.storage);
       }
 
       operator T()
@@ -194,6 +272,43 @@ namespace Crystal
   {
     return Pointer<T>(&value);
   }
+
+  class Bool : public Object
+  {
+  public:
+    Bool(bool b)
+    {
+      storage = b;
+    }
+
+    Bool(Bool& b)
+    {
+      storage = (bool)b;
+    }
+
+    operator bool()
+    {
+      return storage;
+    }
+
+    Bool operator !()
+    {
+      return Bool(!storage);
+    }
+
+    bool operator ==(Bool other)
+    {
+      return (bool)other == storage;
+    }
+
+    bool operator !=(Bool other)
+    {
+      return (bool)other != storage;
+    }
+  private:
+    bool storage;
+  };
+
 }
 
 #include <crystal/literals.hpp>
