@@ -6,6 +6,7 @@ module Cppize
       Lines.new(@failsafe) do |l|
         _r = node.return_type ? transpile node.return_type : transpile_type "Auto"
 
+        _name = translate_name node.name
         unless node.return_type
           l.line "#warning #{pretty_signature node} has not any explicit return type, using auto", true
         end
@@ -22,12 +23,12 @@ module Cppize
         args = node.args.map { |arg| "#{transpile arg.restriction} #{arg.name} #{arg.default_value ? transpile arg.default_value : ""}" }.join(",")
         modifiers = (node.receiver && node.receiver.to_s == "self" ? "static " : "")
 
-        signature = "#{modifiers}#{_r} #{node.name}(#{args})"
+        signature = "#{modifiers}#{_r} #{_name}(#{args})"
 
         if @in_class
           l.line signature
 
-          @defs.block("#{modifiers}#{_r} #{@current_namespace}::#{@current_class}:#{node.name}(#{args})") do
+          @defs.block("#{modifiers}#{_r} #{@current_namespace}::#{@current_class}::#{_name}(#{args})") do
             @defs.line transpile node.body, _r != "void"
           end
         else

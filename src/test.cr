@@ -19,6 +19,14 @@ module MyNamespace
   end
 end
 
+def cool?
+  true
+end
+
+def cppize!
+  printf("This code is already cppized!!!")
+end
+
 lib A_Lib
   fun a(i : Int32) : Void
   fun b = "c"(i : Float64) : Float32

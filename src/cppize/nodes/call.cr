@@ -30,12 +30,7 @@ module Cppize
           elsif node.name == "[]="
             "#{transpile node.obj}[#{transpile node.args.first}] = #{transpile node.args[1]}"
           else
-            name = ADDITIONAL_OPERATORS.has_key?(node.name) ? ADDITIONAL_OPERATORS[node.name] : node.name
-            if name.ends_with?("=")
-              name = name.sub(/^(.*)=$/) { |m| "set_#{m}" }
-            end
-
-            name = name.gsub(/\?/, "_").gsub(/\!/, "__")
+            name = ADDITIONAL_OPERATORS.has_key?(node.name) ? ADDITIONAL_OPERATORS[node.name] : translate_name node.name
             if node.obj.is_a? Self
               "this->#{name}(#{node.args.map { |x| transpile x }.join(", ")})"
             else
@@ -46,7 +41,7 @@ module Cppize
           if @@macros.has_key? node.name
             @@macros[node.name].call self, node
           else
-            "#{node.name}(#{node.args.map { |x| transpile x }.join(",")})"
+            "#{translate_name node.name}(#{node.args.map { |x| transpile x }.join(",")})"
           end
         end
       end
