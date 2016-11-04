@@ -5,7 +5,12 @@ module Cppize
     def initialize(@failsafe = true, &block : Lines -> _)
       @ident = 0
       @code = ""
-      block.call self
+      block.call self if block
+    end
+
+    def initialize(@failsafe = true)
+      @ident = 0
+      @code = ""
     end
 
     def line(str, do_not_place_semicolon : Bool = false)

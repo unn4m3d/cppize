@@ -25,8 +25,17 @@ module Cppize
         if node.obj
           if CPP_OPERATORS.includes? node.name
             "(#{transpile node.obj} #{node.name} #{transpile node.args.first})"
+          elsif node.name == "[]"
+            "#{transpile node.obj}[#{transpile node.args.first}]"
+          elsif node.name == "[]="
+            "#{transpile node.obj}[#{transpile node.args.first}] = #{transpile node.args[1]}"
           else
             name = ADDITIONAL_OPERATORS.has_key?(node.name) ? ADDITIONAL_OPERATORS[node.name] : node.name
+            if name.ends_with?("=")
+              name = name.sub(/^(.*)=$/) { |m| "get_#{m}" }
+            end
+
+            name = name.gsub(/\?/, "_").gsub(/\!/, "__")
             if node.obj.is_a? Self
               "this->#{name}(#{node.args.map { |x| transpile x }.join(", ")})"
             else

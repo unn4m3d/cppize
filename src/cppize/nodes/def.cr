@@ -22,10 +22,24 @@ module Cppize
         args = node.args.map { |arg| "#{transpile arg.restriction} #{arg.name} #{arg.default_value ? transpile arg.default_value : ""}" }.join(",")
         modifiers = (node.receiver && node.receiver.to_s == "self" ? "static " : "")
 
-        l.block "#{modifiers}#{_r} #{node.name}(#{args})" do
-          @scopes.unshift Scope.new
-          l.line transpile node.body, _r != "void"
-          @scopes.shift
+        signature = "#{modifiers}#{_r} #{node.name}(#{args})"
+
+        if @in_class
+          l.line signature
+
+          @defs.block("#{modifiers}#{_r} #{@current_namespace}::#{@current_class}:#{node.name}(#{args})") do
+            @defs.line transpile node.body, _r != "void"
+          end
+        else
+          @forward_decl_defs.block("namespace #{@current_namespace}") do
+            @forward_decl_defs.line signature
+          end
+
+          l.block signature do
+            @scopes.unshift Scope.new
+            l.line transpile node.body, _r != "void"
+            @scopes.shift
+          end
         end
       end.to_s
     end
