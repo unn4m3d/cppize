@@ -32,7 +32,7 @@ module Cppize
           else
             name = ADDITIONAL_OPERATORS.has_key?(node.name) ? ADDITIONAL_OPERATORS[node.name] : node.name
             if name.ends_with?("=")
-              name = name.sub(/^(.*)=$/) { |m| "get_#{m}" }
+              name = name.sub(/^(.*)=$/) { |m| "set_#{m}" }
             end
 
             name = name.gsub(/\?/, "_").gsub(/\!/, "__")

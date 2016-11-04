@@ -191,7 +191,7 @@ module Cppize
     end
 
     def translate_name(name : String)
-      name.sub(/^(.*)=$/) { |m| "get_#{m}" }.gsub("?", "__").gsub("!", "_")
+      name.sub(/^(.*)=$/) { |m| "set_#{m}" }.gsub("?", "__").gsub("!", "_")
     end
   end
 end
