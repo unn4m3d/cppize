@@ -26,13 +26,13 @@ Global        | :x: Not supported |
 HashLiteral   | :x: Not supported |
 If            | :white_check_mark: Supported |
 ImplicitObj   | :x: Not supported |
-Include       | :heavy_exclamation_mark: Experimental |
+Include       | :bangbang: Experimental |
 InstanceSizeOf| :x: Not supported | :soon: Coming soon
 IsA           | :x: Not supported |
 LibDef        | :heavy_exclamation_mark: Partial | 
 Macro         | :x: Not supported |
 MacroFor      | :x: Not supported |
-MacroId       | :heavy_exclamation_mark: Experimental |
+MacroId       | :bangbang: Experimental |
 MacroIf       | :x: Not supported |
 ModuleDef     | :heavy_exclamation_mark: Partial | 
 MultiAssign   | :x: Not supported |
@@ -63,7 +63,7 @@ TypeNode      | :white_check_mark: Supported |
 UnaryExpression | :x: Not supported |
 UninitializedVar | :x: Not supported | :soon: Coming soon 
 Unless        | :white_check_mark: Supported |
-Var           | :heavy_exclamation_mark: Experimental |
+Var           | :bangbang: Experimental |
 VisibilityModifier | :white_check_mark: Supported |
 When          | :x: Not supported |
 While         | :white_check_mark: Supported |
