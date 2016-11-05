@@ -25,6 +25,10 @@ module TemplateModule(T)
   end
 end
 
+module TemplateModule2
+  include TemplateModule(Int32)
+end
+
 def cool?
   true
 end

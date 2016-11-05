@@ -1,6 +1,6 @@
 require "./cppize/*"
 require "./cppize/nodes/*"
-
+require "./ast_search"
 require "compiler/crystal/**"
 require "llvm/**" # For compiler/crystal/semantic/***
 

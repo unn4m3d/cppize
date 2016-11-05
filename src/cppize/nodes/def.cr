@@ -39,7 +39,16 @@ module Cppize
           global_s = @current_class + "::" + global_s unless @current_class.empty?
           global_s = @current_namespace + "::" + global_s unless @current_namespace.empty?
 
-          @defs.block("#{modifiers}#{_r} #{global_s}") do
+          global_s = "#{modifiers}#{_r} #{global_s}"
+          typenames = [] of String
+
+          global_s.gsub(/\<.+\>/) do |m|
+            typenames += m.sub(/^\</, "").sub(/\>$/, "").split(",").map &.strip
+          end
+
+          global_s = "template<#{typenames.map { |x| "typename #{x}" }.join(", ")}> #{global_s}" if typenames.size > 0
+
+          @defs.block(global_s) do
             @defs.line transpile node.body, _r != "void"
           end
         else
