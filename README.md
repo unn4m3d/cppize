@@ -4,6 +4,8 @@ Crystal-to-C++ transpiler [WIP]
 
 Generated code can be compiled with c++14 compiler (tested with g++ 6.2.0)
 
+List of supported AST nodes can be found [here](NODES.md)
+
 ## Usage
 
 1. Compile `src/cppize/transpiler.cr` (it may take some time as it `require`s Crystal parser)
