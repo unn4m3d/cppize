@@ -1,6 +1,6 @@
 module Cppize
   class Transpiler
-    def transpile(node : Var, should_return : Bool = false)
+    protected def transpile(node : Var, should_return : Bool = false)
       found = find_var node.name
       result = ""
       case found[:symbol_type]

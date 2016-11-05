@@ -2,7 +2,7 @@ require "../lines"
 
 module Cppize
   class Transpiler
-    def transpile(node : Def, should_return : Bool = false)
+    protected def transpile(node : Def, should_return : Bool = false)
       Lines.new(@failsafe) do |l|
         _r = node.return_type ? transpile node.return_type : transpile_type "Auto"
 

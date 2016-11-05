@@ -72,7 +72,7 @@ module Cppize
 */
     )
 
-    def initial_defines
+    protected def initial_defines
       lines = [] of String
       lines << "#define CPPIZE_NO_RTTI" if options.has_key? "no-rtti"
       lines << "#define CPPIZE_USE_PRIMITIVE_TYPES" if options.has_key? "primitive-types"
@@ -129,7 +129,7 @@ module Cppize
       @catched = false
     end
 
-    def pretty_signature(d : Def) : String
+    protected def pretty_signature(d : Def) : String
       restrictions = d.args.map &.restriction
       unless d.args.all? { |x| x.restriction }
         raise ArgumentError.new "No type restrictions on #{d.args.select { |x| !x.restriction }.join(",")} (method #{d.name})"
@@ -137,7 +137,7 @@ module Cppize
       "#{d.name}(#{restrictions.map(&.to_s).join(",")})" + (d.return_type ? " : #{d.return_type.to_s}" : "")
     end
 
-    def transpile(node, should_return : Bool = false)
+    protected def transpile(node, should_return : Bool = false)
       if @failsafe
         "#warning Node type #{node.class} isn't supported yet"
       else
@@ -145,7 +145,7 @@ module Cppize
       end
     end
 
-    def transpile_type(_n : String)
+    protected def transpile_type(_n : String)
       if _n.match(/\|/)
         # raise Error.new("Union types are not supported yet (type #{_n})")
         unless @unions.has_key?(_n)
@@ -162,30 +162,30 @@ module Cppize
       end
     end
 
-    def transpile(node : TypeNode, should_return : Bool = false)
+    protected def transpile(node : TypeNode, should_return : Bool = false)
       (should_return ? "return " : "") + transpile_type(node.to_s)
     end
 
-    def transpile(node : Path, should_return : Bool = false)
+    protected def transpile(node : Path, should_return : Bool = false)
       node.names[0] = transpile_type node.names.first
       (should_return ? "return " : "") + (node.global? ? "::" : "") + "#{node.names.join("::")}"
     end
 
-    def transpile(node : Generic, should_return : Bool = false)
+    protected def transpile(node : Generic, should_return : Bool = false)
       (should_return ? "return " : "") + "#{transpile node.name}< #{node.type_vars.map { |x| transpile x }.join(",")} >"
     end
 
-    def transpile(node : Nop, should_return : Bool = false)
+    protected def transpile(node : Nop, should_return : Bool = false)
       ""
     end
 
-    def translate_name(name : String)
+    protected def translate_name(name : String)
       name.sub(/^(.*)=$/) { |m| "set_#{m}" }
           .sub(/^(.*)\?$/) { |m| "is_#{m}" }
           .sub(/^(.*)!$/) { |m| "#{m}_" }.gsub(/[!\?=]/, "")
     end
 
-    def transpile(v : Visibility, s : Bool = false)
+    protected def transpile(v : Visibility, s : Bool = false)
       case v
       when .public?
         "public"

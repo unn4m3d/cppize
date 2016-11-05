@@ -1,6 +1,6 @@
 module Cppize
   class Transpiler
-    def transpile(node : LibDef, should_return : Bool = false)
+    protected def transpile(node : LibDef, should_return : Bool = false)
       @lib_defs.block "namespace #{node.name}" do
         begin
           @lib_defs.line transpile node.body

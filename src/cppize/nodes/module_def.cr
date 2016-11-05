@@ -1,6 +1,6 @@
 module Cppize
   class Transpiler
-    def transpile(node : ModuleDef, s : Bool = false)
+    protected def transpile(node : ModuleDef, s : Bool = false)
       if !node.type_vars.nil?
         tv = node.type_vars.as(Array(String))
         @forward_decl_classes.line "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name}"

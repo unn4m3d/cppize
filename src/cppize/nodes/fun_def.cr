@@ -1,6 +1,6 @@
 module Cppize
   class Transpiler
-    def transpile(node : Crystal::FunDef, r : Bool = false)
+    protected def transpile(node : Crystal::FunDef, r : Bool = false)
       args = node.args.map do |arg|
         "#{transpile arg.restriction} #{arg.name}"
       end.join(", ")

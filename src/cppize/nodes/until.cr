@@ -1,6 +1,6 @@
 module Cppize
   class Transpiler
-    def transpile(node : Until, should_return : Bool = false)
+    protected def transpile(node : Until, should_return : Bool = false)
       Lines.new do |l|
         l.block "while(!(#{transpile node.cond}))" do
           l.line(transpile(node.body))

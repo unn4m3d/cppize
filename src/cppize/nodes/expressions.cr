@@ -1,6 +1,6 @@
 module Cppize
   class Transpiler
-    def transpile(node : Expressions, should_return : Bool = false)
+    protected def transpile(node : Expressions, should_return : Bool = false)
       Lines.new do |l|
         if should_return
           node.expressions[0..-2].each do |e|
