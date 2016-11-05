@@ -15,6 +15,9 @@ module Cppize
 
         @scopes << Scope.new if @scopes.size < 1
         @scopes.first[node.name] = {symbol_type: :method, value: node}
+        node.args.each do |arg|
+          @scopes.first[arg.name] = {symbol_type: :object, value: arg}
+        end
         unless node.args.all? &.restriction
           _args = node.args.select { |x| !x.restriction }.map(&.name).join(", ")
           raise Error.new("Method #{pretty_signature node} needs types of following args to be specified : #{_args}")
@@ -26,9 +29,17 @@ module Cppize
         signature = "#{modifiers}#{_r} #{_name}(#{args})"
 
         if @in_class
+          if @current_visibility != node.visibility
+            l.line(transpile(node.visibility) + ":", true)
+            @current_visibility = node.visibility
+          end
           l.line signature
 
-          @defs.block("#{modifiers}#{_r} #{@current_namespace}::#{@current_class}::#{_name}(#{args})") do
+          global_s = "#{_name}(#{args})"
+          global_s = @current_class + "::" + global_s unless @current_class.empty?
+          global_s = @current_namespace + "::" + global_s unless @current_namespace.empty?
+
+          @defs.block("#{modifiers}#{_r} #{global_s}") do
             @defs.line transpile node.body, _r != "void"
           end
         else

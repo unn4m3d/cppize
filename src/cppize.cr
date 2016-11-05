@@ -31,6 +31,7 @@ module Cppize
     @current_namespace = ""
     @in_class = false
     @current_class = ""
+    @current_visibility : Visibility? = nil
 
     def find_var(name : String) : NamedTuple(symbol_type: Symbol, value: ASTNode?)
       if name == "self"
@@ -182,6 +183,19 @@ module Cppize
       name.sub(/^(.*)=$/) { |m| "set_#{m}" }
           .sub(/^(.*)\?$/) { |m| "is_#{m}" }
           .sub(/^(.*)!$/) { |m| "#{m}_" }.gsub(/[!\?=]/, "")
+    end
+
+    def transpile(v : Visibility, s : Bool = false)
+      case v
+      when .public?
+        "public"
+      when .private?
+        "private"
+      when .protected?
+        "protected"
+      else
+        "private"
+      end
     end
   end
 end

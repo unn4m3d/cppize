@@ -19,6 +19,12 @@ module MyNamespace
   end
 end
 
+module TemplateModule(T)
+  def to_t(o : Object) : T
+    T.new(o)
+  end
+end
+
 def cool?
   true
 end
