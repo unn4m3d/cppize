@@ -43,3 +43,8 @@ Crystal::Float64 operator"" _crf64 (const long double input){
 Crystal::Bool operator""_crbool(const char t){
   return Crystal::Bool((const bool) t);
 }
+
+Crystal::String operator""_crstr(const char* c, size_t cnt)
+{
+  return Crystal::String(c,cnt);
+}
