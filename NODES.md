@@ -11,7 +11,7 @@ BinaryOp      | :x: Not supported |
 Block         | :x: Not supported |
 BoolLiteral   | :white_check_mark: Supported |
 Break         | :white_check_mark: Supported |
-Call          | :heavy_exclamation_mark: Partial | No unary expressions support yet
+Call          | :heavy_exclamation_mark: Partial | No unary expressions support yet<br>Block args are not supported
 Case          | :x: Not supported | :soon: Coming soon
 Cast          | :x: Not supported |
 CharLiteral   | :x: Not supported |
