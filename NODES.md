@@ -17,7 +17,7 @@ Cast          | :x: Not supported |
 CharLiteral   | :x: Not supported |
 ClassDef      | :x: Not supported |
 ClassVar      | :x: Not supported |
-Def           | :heavy_exclamation_mark: Partial | No class/instance defs as ClassDefs are not implemented
+Def           | :heavy_exclamation_mark: Partial | No class/instance defs as ClassDefs are not implemented<br>Block args and splats are not supported<br>All arguments should have type restrictions
 EnumDef       | :white_check_mark: Supported |
 Expressions   | :white_check_mark: Supported |
 FunDef        | :white_check_mark: Supported |
