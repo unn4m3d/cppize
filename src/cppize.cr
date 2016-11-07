@@ -172,6 +172,8 @@ module Cppize
         if trace
           str += "\n\t" + backtrace.join("\n\t")
         end
+
+        str
       end
     end
 
