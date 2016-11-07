@@ -2,6 +2,8 @@ require "../lines"
 
 module Cppize
   class Transpiler
+    @template_defs = [] of String
+
     protected def transpile(node : Def, should_return : Bool = false)
       Lines.new(@failsafe) do |l|
         _r = node.return_type ? transpile node.return_type : transpile_type "Auto"
@@ -18,10 +20,6 @@ module Cppize
         node.args.each do |arg|
           @scopes.first[arg.name] = {symbol_type: :object, value: arg}
         end
-        unless node.args.all? &.restriction
-          _args = node.args.select { |x| !x.restriction }.map(&.name).join(", ")
-          raise Error.new("Method #{pretty_signature node} needs types of following args to be specified : #{_args}")
-        end
 
         args = node.args.map { |arg| "#{transpile arg.restriction} #{arg.name} #{arg.default_value ? transpile arg.default_value : ""}" }.join(",")
         modifiers = (node.receiver && node.receiver.to_s == "self" ? "static " : "")
@@ -35,7 +33,7 @@ module Cppize
           end
           l.line signature
 
-          global_s = "#{_name}(#{args})"
+          global_s = "#{_name}"
           global_s = @current_class + "::" + global_s unless @current_class.empty?
           global_s = @current_namespace + "::" + global_s unless @current_namespace.empty?
 
@@ -46,7 +44,15 @@ module Cppize
             typenames += m.sub(/^\</, "").sub(/\>$/, "").split(",").map &.strip
           end
 
-          global_s = "template<#{typenames.map { |x| "typename #{x}" }.join(", ")}> #{global_s}" if typenames.size > 0
+          unless node.args.all? &.restriction
+            typenames += node.args
+              .select { |x| !x.restriction }
+              .map{ |x| "T_#{x.name}"}
+          end
+
+          @template_defs << global_s if !@template_defs.includes? global_s && typenames.size > 0
+          global_s = "template<#{typenames.map { |x| "typename #{x}" }.join(", ")}> #{global_s}" if typenames.size > 0 || @template_defs.includes? global_s
+          global_s += "(#{args})"
 
           @defs.block(global_s) do
             @defs.line transpile node.body, _r != "void"
