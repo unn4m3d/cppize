@@ -126,7 +126,46 @@ module Cppize
 
     class Error < ArgumentError
       property? catched : Bool
+      property node_stack : Array(ASTNode?)
+      property filename : String
+      def to_s(filename : String = "<unknown>", )
+
       @catched = false
+
+      def initialize(message : String, node : ASTNode? = nil, cause : Exception? = nil,@filename = "<unknown>")
+        @node_stack = []
+        if cause.is_a(self)
+          @node_stack = cause.as(self).node_stack
+        end
+
+        unless node.nil?
+          @node_stack.unshift(node.not_nil!)
+        end
+        super message, cause
+      end
+
+      protected def l2s(l : Location?, file : String? = nil)
+        file ||= "<unknown>"
+        if l.nil?
+          "at #{file} [<unknown>] "
+        else
+          "at #{file} [line #{l.not_nil!.line_number}; col #{l.not_nil!.column_number}]"
+        end
+      end
+
+      def to_s(trace : Bool = false)
+        str = message + "\n"
+        if node_stack.size > 0 then
+          str += "\n\t" + node_stack.map do |x|
+            s = "Caused by node #{x.class.name} #{l2s x.location,@filename}"
+            s += " (End at #{l2s x.end_location,@filename})"
+          end.join("\n\t") + "\n"
+        end
+
+        if trace
+          str += "\n\t" + backtrace.join("\n\t")
+        end
+      end
     end
 
     protected def pretty_signature(d : Def) : String
