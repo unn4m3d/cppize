@@ -140,7 +140,7 @@ module Cppize
 
       def initialize(message : String, node : ASTNode? = nil, cause : Exception? = nil,@filename = "<unknown>")
         @node_stack = [] of ASTNode
-        if cause.is_a(self)
+        if cause.is_a?(self)
           @node_stack = cause.as(self).node_stack
         end
 
