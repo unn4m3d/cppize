@@ -4,7 +4,7 @@ module Cppize
       if @in_class
         ""
       else
-        try_tr node {"using namespace #{transpile node.name}"}
+        try_tr(node){"using namespace #{transpile node.name}"}
       end
     end
   end
