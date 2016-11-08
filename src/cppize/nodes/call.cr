@@ -18,8 +18,8 @@ module Cppize
       "class" => "get_type",
     }
 
-    protected def transpile(node : Call, should_return : Bool = false)
-      try_tr node do
+    protected def transpile(node : Call, should_return : Bool = false) : String
+      return try_tr(node) do
         if should_return
           "return #{transpile node}"
         else

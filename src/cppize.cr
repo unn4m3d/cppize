@@ -218,10 +218,10 @@ module Cppize
     end
 
     protected def transpile(node : TypeNode, should_return : Bool = false)
-      try_tr(node){(should_return ? "return " : "") + transpile_type(node.to_s)}
+      return try_tr(node){(should_return ? "return " : "") + transpile_type(node.to_s)}
     end
 
-    protected def transpile(node : ::Crystal::Path, should_return : Bool = false)
+    protected def transpile(node : Path, should_return : Bool = false)
       #try_tr node do
         node.names[0] = transpile_type node.names.first
         (should_return ? "return " : "") + (node.global? ? "::" : "") + "#{node.names.join("::")}"
@@ -232,7 +232,11 @@ module Cppize
       try_tr (node){(should_return ? "return " : "") + "#{transpile node.name}< #{node.type_vars.map { |x| transpile x }.join(",")} >"}
     end
 
-    protected def transpile(node : Nop | Nil, should_return : Bool = false)
+    protected def transpile(node : Nop, should_return : Bool = false)
+      ""
+    end
+
+    protected def transpile(node : Nil, should_return : Bool = false)
       ""
     end
 
@@ -242,16 +246,17 @@ module Cppize
           .sub(/^(.*)!$/) { |m| "#{m}_" }.gsub(/[!\?=]/, "")
     end
 
-    protected def try_tr(node : ASTNode, &block)
+    protected def try_tr(node : ASTNode | Visibility, &block : Proc(String))
       begin
-        block.call
+        return block.call
       rescue e : Error
-        raise Error.new(e.message.to_s,node,e,@current_filename)
+        raise Error.new(e.message.to_s,nil,e,@current_filename)
       end
+      return ""
     end
 
     protected def transpile(v : Visibility, s : Bool = false)
-      try_tr v do
+      return try_tr v do
         case v
         when .public?
           "public"

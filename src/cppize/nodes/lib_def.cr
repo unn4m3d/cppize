@@ -1,7 +1,7 @@
 module Cppize
   class Transpiler
     protected def transpile(node : LibDef, should_return : Bool = false)
-      try_tr node do
+      try_tr(node) do
         @lib_defs.block "namespace #{node.name}" do
         #begin
           @lib_defs.line transpile node.body
@@ -9,8 +9,9 @@ module Cppize
         #  @lib_defs.line("#error #{ex}")
         #end
         end
+        ""
       end
-      ""
+
     end
 
     def transpile(node : String)

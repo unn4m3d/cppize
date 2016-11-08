@@ -13,8 +13,8 @@ module Cppize
       @code = ""
     end
 
-    def line(str : String, do_not_place_semicolon : Bool = false)
-      lines = str.split("\n")
+    def line(str, do_not_place_semicolon : Bool = false)
+      lines = str.to_s.split("\n")
       old_ident = lines.first.match(/^[\s\t]+/) || [""]
       lines.each do |l|
         @code += "\t"*@ident + l.sub(old_ident[0], "")

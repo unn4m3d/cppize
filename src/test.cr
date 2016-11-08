@@ -29,8 +29,8 @@ module TemplateModule2
   include TemplateModule(Int32)
 end
 
-def cool?(a)
-  a
+def cool?()
+  
 end
 
 def cppize!

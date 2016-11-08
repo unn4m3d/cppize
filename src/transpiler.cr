@@ -39,6 +39,7 @@ OptionParser.parse! do |opts|
 
   opts.on("-s", "--use-stdin", "Reads code from stdin") do
     use_stdin = true
+    input = "<stdin>"
   end
 
   opts.on("-h", "--help", "Prints this help and exits") do
@@ -78,7 +79,7 @@ unless output
   end
 end
 
-code += transpiler.parse_and_transpile(input_c)
+code += transpiler.parse_and_transpile(input_c, )
 
 if use_stdout
   puts code
