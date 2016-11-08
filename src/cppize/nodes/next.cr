@@ -1,6 +1,6 @@
 module Cppize
   class Transpiler
-    protected def transpile(node : Next, should_return : Bool = false)
+    register_node Next do
       if node.exp
         raise Error.new("Nexts with expressions are not supported")
       else

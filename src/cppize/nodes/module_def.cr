@@ -1,6 +1,6 @@
 module Cppize
   class Transpiler
-    protected def transpile(node : ModuleDef, s : Bool = false)
+    register_node ModuleDef do
       includes = node.search_of_type(Include)
       ancestors = includes.size > 0 ? ": #{includes.map { |x| "public virtual " + transpile x.as(Include).name }.join(", ")}" : ""
 

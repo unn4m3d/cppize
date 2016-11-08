@@ -1,10 +1,10 @@
 module Cppize
   class Transpiler
-    def transpile(node : Include, s : Bool = false)
+    register_node Include do
       if @in_class
         ""
       else
-        try_tr(node){"using namespace #{transpile node.name}"}
+      "using namespace #{transpile node.name}"
       end
     end
   end

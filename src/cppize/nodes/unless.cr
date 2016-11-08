@@ -1,6 +1,6 @@
 module Cppize
   class Transpiler
-    protected def transpile(node : Unless, should_return : Bool = false)
+    register_node Unless do
       Lines.new(@failsafe) do |l|
         l.block "if(!(#{transpile node.cond}))" do
           l.line(transpile(node.then, should_return))

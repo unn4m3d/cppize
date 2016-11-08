@@ -1,20 +1,13 @@
 module Cppize
   class Transpiler
-    protected def transpile(node : LibDef, should_return : Bool = false)
-      try_tr(node) do
-        @lib_defs.block "namespace #{node.name}" do
-        #begin
-          @lib_defs.line transpile node.body
-        #rescue ex : Error
-        #  @lib_defs.line("#error #{ex}")
-        #end
-        end
-        ""
+    register_node LibDef do
+      @lib_defs.block "namespace #{node.name}" do
+        @lib_defs.line transpile node.body
       end
-
+      ""
     end
 
-    def transpile(node : String)
+    register_node String do # TODO : remove this
       node
     end
   end
