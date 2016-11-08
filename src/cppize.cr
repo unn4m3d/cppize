@@ -2,7 +2,7 @@ require "./cppize/*"
 require "./cppize/nodes/*"
 require "./ast_search"
 require "compiler/crystal/**"
-require "llvm/**" # For compiler/crystal/semantic/***
+#require "llvm/**" # For compiler/crystal/semantic/***
 
 class Crystal::Program
   @crystal_path : CrystalPath?

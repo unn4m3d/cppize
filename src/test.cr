@@ -30,7 +30,7 @@ module TemplateModule2
 end
 
 def cool?()
-  
+
 end
 
 def cppize!

@@ -79,7 +79,7 @@ unless output
   end
 end
 
-code += transpiler.parse_and_transpile(input_c, )
+code += transpiler.parse_and_transpile(input_c,input )
 
 if use_stdout
   puts code
