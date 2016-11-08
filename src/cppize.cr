@@ -8,6 +8,10 @@ class Crystal::Program
   @crystal_path : CrystalPath?
 end
 
+lib Fake_LLVM
+
+end
+
 class ArgumentError
   def initialize(message : String? = nil, cause : Exception? = nil)
     super message, cause
