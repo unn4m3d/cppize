@@ -225,10 +225,10 @@ module Cppize
     end
 
     protected def transpile(node : ::Crystal::Path, should_return : Bool = false)
-      try_tr node do
+      #try_tr node do
         node.names[0] = transpile_type node.names.first
         (should_return ? "return " : "") + (node.global? ? "::" : "") + "#{node.names.join("::")}"
-      end
+      #end
     end
 
     protected def transpile(node : Generic, should_return : Bool = false)
