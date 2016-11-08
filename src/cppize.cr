@@ -131,7 +131,7 @@ module Cppize
       parse_and_transpile File.read(file),file
     end
 
-    class Error < ArgumentError
+    class Error < Exception
       property? catched : Bool
       property node_stack : Array(ASTNode)
       property filename : String
