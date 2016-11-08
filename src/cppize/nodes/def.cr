@@ -38,15 +38,9 @@ module Cppize
             end
             l.line signature
 
-<<<<<<< HEAD
-          global_s = "#{_name}"
-          global_s = @current_class + "::" + global_s unless @current_class.empty?
-          global_s = @current_namespace + "::" + global_s unless @current_namespace.empty?
-=======
             global_s = "#{_name}(#{args})"
             global_s = @current_class + "::" + global_s unless @current_class.empty?
             global_s = @current_namespace + "::" + global_s unless @current_namespace.empty?
->>>>>>> 323aaa0fbe25b04ec4c8ddb03c3ae20b7715f243
 
             global_s = "#{modifiers}#{_r} #{global_s}"
             typenames = [] of String
@@ -55,19 +49,7 @@ module Cppize
               typenames += m.sub(/^\</, "").sub(/\>$/, "").split(",").map &.strip
             end
 
-<<<<<<< HEAD
-          unless node.args.all? &.restriction
-            typenames += node.args
-              .select { |x| !x.restriction }
-              .map{ |x| "T_#{x.name}"}
-          end
-
-          @template_defs << global_s if !@template_defs.includes? global_s && typenames.size > 0
-          global_s = "template<#{typenames.map { |x| "typename #{x}" }.join(", ")}> #{global_s}" if typenames.size > 0 || @template_defs.includes? global_s
-          global_s += "(#{args})"
-=======
             global_s = "template<#{typenames.map { |x| "typename #{x}" }.join(", ")}> #{global_s}" if typenames.size > 0
->>>>>>> 323aaa0fbe25b04ec4c8ddb03c3ae20b7715f243
 
             @defs.block(global_s) do
               @defs.line transpile node.body, _r != "void"
