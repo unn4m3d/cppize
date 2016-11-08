@@ -1,6 +1,1 @@
 language : crystal
-addons :
-  apt :
-    packages :
-      - llvm-3.6
-      - llvm-3.6-runtime
