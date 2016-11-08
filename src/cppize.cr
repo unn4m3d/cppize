@@ -144,7 +144,7 @@ module Cppize
 
       @catched = false
 
-      def initialize(message : String, node : ASTNode? = nil, cause : Exception? = nil,@real_filename = "<unknown>")
+      def initialize(message : String, node : ::Crystal::ASTNode? = nil, cause : Exception? = nil,@real_filename = "<unknown>")
         @node_stack = [] of ASTNode
         if cause.is_a?(self)
           @node_stack = cause.as(self).node_stack
@@ -224,7 +224,7 @@ module Cppize
       try_tr(node){(should_return ? "return " : "") + transpile_type(node.to_s)}
     end
 
-    protected def transpile(node : Path, should_return : Bool = false)
+    protected def transpile(node : ::Crystal::Path, should_return : Bool = false)
       try_tr node do
         node.names[0] = transpile_type node.names.first
         (should_return ? "return " : "") + (node.global? ? "::" : "") + "#{node.names.join("::")}"
