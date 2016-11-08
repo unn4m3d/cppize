@@ -13,7 +13,7 @@ module Cppize
       @code = ""
     end
 
-    def line(str, do_not_place_semicolon : Bool = false)
+    def line(str : String, do_not_place_semicolon : Bool = false)
       lines = str.to_s.split("\n")
       old_ident = lines.first.match(/^[\s\t]+/) || [""]
       lines.each do |l|
@@ -21,6 +21,9 @@ module Cppize
         @code += ";" if !do_not_place_semicolon && lines.size == 1
         @code += "\n"
       end
+    end
+
+    def line(s : Nil)
     end
 
     def block(header : String? = nil, &block)

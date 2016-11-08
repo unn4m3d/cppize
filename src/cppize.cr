@@ -1,15 +1,10 @@
 require "./cppize/*"
-require "./cppize/nodes/*"
 require "./ast_search"
 require "compiler/crystal/**"
 #require "llvm/**" # For compiler/crystal/semantic/***
 
 class Crystal::Program
   @crystal_path : CrystalPath?
-end
-
-lib Fake_LLVM
-
 end
 
 class ArgumentError
@@ -23,6 +18,12 @@ module Cppize
 
   class Transpiler
     property options
+
+    macro register_node(klass,&block)
+      protected def transpile(node : {{klass}}, should_return? : Bool = false)
+        {{block.body}}
+      end
+    end
 
     @forward_decl_classes = Lines.new
     @forward_decl_defs = Lines.new
@@ -221,8 +222,8 @@ module Cppize
       end
     end
 
-    protected def transpile(node : TypeNode, should_return : Bool = false)
-      return try_tr(node){(should_return ? "return " : "") + transpile_type(node.to_s)}
+    register_node TypeNode do
+      try_tr(node){(should_return? ? "return " : "") + transpile_type(node.to_s)}
     end
 
     protected def transpile(node : Path, should_return : Bool = false)
@@ -275,3 +276,5 @@ module Cppize
     end
   end
 end
+
+require "./cppize/nodes/*"
