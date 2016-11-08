@@ -135,7 +135,6 @@ module Cppize
       property? catched : Bool
       property node_stack : Array(ASTNode?)
       property filename : String
-      def to_s(filename : String = "<unknown>", )
 
       @catched = false
 
@@ -173,7 +172,6 @@ module Cppize
           str += "\n\t" + backtrace.join("\n\t")
         end
 
-        str
       end
     end
 
