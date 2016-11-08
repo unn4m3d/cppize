@@ -235,7 +235,7 @@ module Cppize
       try_tr (node){(should_return ? "return " : "") + "#{transpile node.name}< #{node.type_vars.map { |x| transpile x }.join(",")} >"}
     end
 
-    protected def transpile(node : Nop, should_return : Bool = false)
+    protected def transpile(node : Nop | Nil, should_return : Bool = false)
       ""
     end
 
