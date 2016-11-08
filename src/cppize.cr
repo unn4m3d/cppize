@@ -133,13 +133,13 @@ module Cppize
 
     class Error < ArgumentError
       property? catched : Bool
-      property node_stack : Array(ASTNode?)
+      property node_stack : Array(ASTNode)
       property filename : String
 
       @catched = false
 
       def initialize(message : String, node : ASTNode? = nil, cause : Exception? = nil,@filename = "<unknown>")
-        @node_stack = []
+        @node_stack = [] of ASTNode
         if cause.is_a(self)
           @node_stack = cause.as(self).node_stack
         end
