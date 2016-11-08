@@ -21,6 +21,15 @@ Supported features (`-f...`) :
 * `-fno-std-string` - tells to use own implementation of string instead of `std::string` (*Currently not implemented*)
 * `-fprimitive-types` - tells to use primitive types such as `int` instead of stdlib object-oriented implementations
 
+## Things to improve in already supported AST nodes
+
+1. Add support for ternary if in certain cases
+2. Add support for args without type restrictions
+3. Improve automatic return
+4. Improve module type detection (namespace / includable)
+5. Add support for block args
+
+
 
 ## Development
 
