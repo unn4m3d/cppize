@@ -160,7 +160,7 @@ module Cppize
       end
 
       def to_s(trace : Bool = false)
-        str = message + "\n"
+        str = message.to_s + "\n"
         if node_stack.size > 0
           str += "\n\t" + node_stack.map do |x|
             s = "Caused by node #{x.class.name} #{l2s x.location,@filename}"
