@@ -16,13 +16,6 @@ module Cppize
 
           l.line "// Generated from #{pretty_signature node}", true
 
-<<<<<<< HEAD
-        @scopes << Scope.new if @scopes.size < 1
-        @scopes.first[node.name] = {symbol_type: :method, value: node}
-        node.args.each do |arg|
-          @scopes.first[arg.name] = {symbol_type: :object, value: arg}
-        end
-=======
           @scopes << Scope.new if @scopes.size < 1
           @scopes.first[node.name] = {symbol_type: :method, value: node}
           node.args.each do |arg|
@@ -32,7 +25,6 @@ module Cppize
             _args = node.args.select { |x| !x.restriction }.map(&.name).join(", ")
             raise Error.new("Method #{pretty_signature node} needs types of following args to be specified : #{_args}")
           end
->>>>>>> 323aaa0fbe25b04ec4c8ddb03c3ae20b7715f243
 
           args = node.args.map { |arg| "#{transpile arg.restriction} #{arg.name} #{arg.default_value ? transpile arg.default_value : ""}" }.join(",")
           modifiers = (node.receiver && node.receiver.to_s == "self" ? "static " : "")
