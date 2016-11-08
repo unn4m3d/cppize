@@ -8,6 +8,12 @@ class Crystal::Program
   @crystal_path : CrystalPath?
 end
 
+class ArgumentError
+  def initialize(message : String? = nil, cause : Exception? = nil)
+    super message, cause
+  end
+end
+
 module Cppize
   include Crystal
 
@@ -131,7 +137,7 @@ module Cppize
       parse_and_transpile File.read(file),file
     end
 
-    class Error < Exception
+    class Error < ArgumentError
       property? catched : Bool
       property node_stack : Array(ASTNode)
       property real_filename : String
@@ -178,10 +184,6 @@ module Cppize
         end
 
         str
-      end
-
-      def to_s_with_source(s,i)
-        i << ""
       end
     end
 
