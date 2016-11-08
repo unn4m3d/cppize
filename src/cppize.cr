@@ -179,6 +179,10 @@ module Cppize
 
         str
       end
+
+      def to_s_with_source(s,i)
+        i << ""
+      end
     end
 
     protected def pretty_signature(d : Def) : String
