@@ -21,7 +21,9 @@ module Cppize
 
     macro register_node(klass,&block)
       protected def transpile(node : {{klass}}, should_return? : Bool = false)
-        {{block.body}}
+        try_tr(node) do
+          {{block.body}}
+        end
       end
     end
 

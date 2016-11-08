@@ -4,7 +4,7 @@ module Cppize
   class Transpiler
     @template_defs = [] of String
 
-    protected def transpile(node : Def, should_return : Bool = false) : String
+    register_node Def do
       try_tr node do
         Lines.new(@failsafe) do |l|
           _r = node.return_type ? transpile node.return_type : transpile_type "Auto"
