@@ -7,8 +7,8 @@ module Cppize
       ""
     end
 
-    register_node String do # TODO : remove this
-      node
-    end
+    #register_node String do # TODO : remove this
+    #  node
+    #end
   end
 end

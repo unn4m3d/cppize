@@ -1,7 +1,6 @@
 require "./cppize/*"
 require "./ast_search"
 require "compiler/crystal/**"
-#require "llvm/**" # For compiler/crystal/semantic/***
 
 class Crystal::Program
   @crystal_path : CrystalPath?
@@ -228,22 +227,22 @@ module Cppize
       try_tr(node){(should_return? ? "return " : "") + transpile_type(node.to_s)}
     end
 
-    protected def transpile(node : Path, should_return : Bool = false)
+    register_node Path do
       #try_tr node do
         node.names[0] = transpile_type node.names.first
-        (should_return ? "return " : "") + (node.global? ? "::" : "") + "#{node.names.join("::")}"
+        (should_return? ? "return " : "") + (node.global? ? "::" : "") + "#{node.names.join("::")}"
       #end
     end
 
-    protected def transpile(node : Generic, should_return : Bool = false)
-      try_tr (node){(should_return ? "return " : "") + "#{transpile node.name}< #{node.type_vars.map { |x| transpile x }.join(",")} >"}
+    register_node Generic do
+      (should_return? ? "return " : "") + "#{transpile node.name}< #{node.type_vars.map { |x| transpile x }.join(",")} >"
     end
 
-    protected def transpile(node : Nop, should_return : Bool = false)
+    register_node Nop do
       ""
     end
 
-    protected def transpile(node : Nil, should_return : Bool = false)
+    protected def transpile(node : Nil, s : Bool = true)
       ""
     end
 

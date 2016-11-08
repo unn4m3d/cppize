@@ -10,11 +10,11 @@ module Cppize
       _type += "::unsafe_type" unless (_type == "void" || options.has_key?("primitive-types"))
 
       if node.name == node.real_name
-        "extern \"C\" #{_type} #{transpile node.real_name}(#{args})"
+        "extern \"C\" #{_type} #{node.real_name}(#{args})"
       else
         Lines.new @failsafe do |l|
           l.block "namespace __fun_def_pseudonyms" do
-            l.line "extern \"C\" #{_type} #{transpile node.real_name}(#{args})"
+            l.line "extern \"C\" #{_type} #{node.real_name}(#{args})"
           end
 
           l.block "auto #{node.name}(#{args})" do

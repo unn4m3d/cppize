@@ -31,6 +31,7 @@ module Cppize
         ""
       else
         Lines.new(@failsafe) do |l|
+          l.line nil 
           l.block "namespace #{node.name}" do
             old_namespace, @current_namespace = @current_namespace, @current_namespace + "::" + node.name.to_s
             l.line transpile node.body
