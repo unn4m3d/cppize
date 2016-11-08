@@ -249,7 +249,7 @@ module Cppize
       begin
         block.call
       rescue e : Error
-        raise Error.new(e.message,node,e,@current_filename)
+        raise Error.new(e.message.to_s,node,e,@current_filename)
       end
     end
 
