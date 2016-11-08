@@ -151,7 +151,12 @@ module Cppize
       end
 
       protected def l2s(l : Location?, file : String? = nil)
-        file ||= l.filename || "<unknown>"
+        file ||= "unknown>"
+        unless l.nil?
+          unless l.not_nil!.filename.nil?
+            file = l.not_nil!.filename.not_nil!
+          end
+        end
         if l.nil?
           "at #{file} [<unknown>] "
         else
