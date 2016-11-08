@@ -134,11 +134,11 @@ module Cppize
     class Error < Exception
       property? catched : Bool
       property node_stack : Array(ASTNode)
-      property filename : String
+      property real_filename : String
 
       @catched = false
 
-      def initialize(message : String, node : ASTNode? = nil, cause : Exception? = nil,@filename = "<unknown>")
+      def initialize(message : String, node : ASTNode? = nil, cause : Exception? = nil,@real_filename = "<unknown>")
         @node_stack = [] of ASTNode
         if cause.is_a?(self)
           @node_stack = cause.as(self).node_stack
@@ -168,8 +168,8 @@ module Cppize
         str = message.to_s + "\n"
         if node_stack.size > 0
           str += "\n\t" + node_stack.map do |x|
-            s = "Caused by node #{x.class.name} #{l2s x.location,@filename}"
-            s += " (End at #{l2s x.end_location,@filename})"
+            s = "Caused by node #{x.class.name} #{l2s x.location,@real_filename}"
+            s += " (End at #{l2s x.end_location,@real_filename})"
           end.join("\n\t") + "\n"
         end
 
