@@ -215,7 +215,7 @@ module Cppize
     end
 
     protected def transpile(node : TypeNode, should_return : Bool = false)
-      try_tr node{(should_return ? "return " : "") + transpile_type(node.to_s)}
+      try_tr(node){(should_return ? "return " : "") + transpile_type(node.to_s)}
     end
 
     protected def transpile(node : Path, should_return : Bool = false)
@@ -226,7 +226,7 @@ module Cppize
     end
 
     protected def transpile(node : Generic, should_return : Bool = false)
-      try_tr node{(should_return ? "return " : "") + "#{transpile node.name}< #{node.type_vars.map { |x| transpile x }.join(",")} >"}
+      try_tr (node){(should_return ? "return " : "") + "#{transpile node.name}< #{node.type_vars.map { |x| transpile x }.join(",")} >"}
     end
 
     protected def transpile(node : Nop, should_return : Bool = false)
