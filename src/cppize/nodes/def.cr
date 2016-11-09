@@ -57,12 +57,13 @@ module Cppize
         namesp = (@current_namespace.empty? ? "" : @current_namespace + "::")
 
         if @in_class
-          if @current_visibility != node.visibility
-            @classes.line "public:", true
-            @current_visibility = node.visibility
+          Lines.new @failsafe do
+            if @current_visibility != node.visibility
+              l.line "public:", true
+              @current_visibility = node.visibility
+              l.line local_signature
+            end
           end
-
-          @classes.line local_signature
 
           global_signature = "#{global_template}#{modifiers}#{def_type} #{namesp}#{@current_class}::#{common_signature}"
 
