@@ -11,14 +11,14 @@ BinaryOp      | :x: Not supported |
 Block         | :white_check_mark: Supported |
 BoolLiteral   | :white_check_mark: Supported |
 Break         | :white_check_mark: Supported |
-Call          | :white_check_mark: Supported |
+Call          | :heavy_exclamation_mark: Partial | :warning: `NamedArgument`s are not supported
 Case          | :x: Not supported | :soon: Coming soon
 Cast          | :x: Not supported |
 CharLiteral   | :x: Not supported |
 ClassDef      | :x: Not supported |
 ClassVar      | :x: Not supported |
-Def           | :heavy_exclamation_mark: Partial | No class/instance defs as ClassDefs are not implemented<br>Splats are not supported
-EnumDef       | :heavy_exclamation_mark: Partial | Only enums without base type are supported
+Def           | :heavy_exclamation_mark: Partial | :warning: No class/instance defs as ClassDefs are not implemented<br>:warning: Splats are not supported
+EnumDef       | :heavy_exclamation_mark: Partial | :warning: Only enums without base type are supported
 Expressions   | :white_check_mark: Supported |
 FunDef        | :white_check_mark: Supported |
 Generic       | :white_check_mark: Supported |
@@ -27,7 +27,7 @@ HashLiteral   | :x: Not supported |
 If            | :white_check_mark: Supported |
 ImplicitObj   | :x: Not supported |
 Include       | :bangbang: Experimental |
-InstanceSizeOf| :x: Not supported | :soon: Coming soon
+InstanceSizeOf| :white_check_mark: Supported |
 IsA           | :x: Not supported |
 LibDef        | :heavy_exclamation_mark: Partial |
 Macro         | :x: Not supported |
@@ -55,7 +55,7 @@ RegexLiteral  | :x: Not supported |
 Require       | :x: Not supported |
 RespondsTo    | :x: Not supported |
 Return        | :heavy_exclamation_mark: Partial |
-SizeOf        | :x: Not supported | :soon: Coming soon
+SizeOf        | :heavy_exclamation_mark: Partial | :warning: Behaves the same way as `InstanceSizeOf`
 StringInterpolation | :white_check_mark: Supported |
 StringLiteral | :white_check_mark: Supported |
 SymbolLiteral | :x: Not supported |
