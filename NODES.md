@@ -8,17 +8,17 @@ Arg           | :heavy_exclamation_mark: Partial |
 ArrayLiteral  | :x: Not supported |
 Assign        | :white_check_mark: Supported |
 BinaryOp      | :x: Not supported |
-Block         | :x: Not supported |
+Block         | :white_check_mark: Supported |
 BoolLiteral   | :white_check_mark: Supported |
 Break         | :white_check_mark: Supported |
-Call          | :heavy_exclamation_mark: Partial | No unary expressions support yet<br>Block args are not supported
+Call          | :white_check_mark: Supported |
 Case          | :x: Not supported | :soon: Coming soon
 Cast          | :x: Not supported |
 CharLiteral   | :x: Not supported |
 ClassDef      | :x: Not supported |
 ClassVar      | :x: Not supported |
-Def           | :heavy_exclamation_mark: Partial | No class/instance defs as ClassDefs are not implemented<br>Block args and splats are not supported
-EnumDef       | :white_check_mark: Supported |
+Def           | :heavy_exclamation_mark: Partial | No class/instance defs as ClassDefs are not implemented<br>Splats are not supported
+EnumDef       | :heavy_exclamation_mark: Partial | Only enums without base type are supported
 Expressions   | :white_check_mark: Supported |
 FunDef        | :white_check_mark: Supported |
 Generic       | :white_check_mark: Supported |
@@ -48,13 +48,14 @@ Or            | :x: Not supported | :soon: Coming soon
 Out           | :x: Not supported |
 Path          | :heavy_exclamation_mark: Partial |
 PointerOf     | :white_check_mark: Supported | Implemented through a function
+ProcNotation  | :x: Not supported | :soon: Coming soon
 RangeLiteral  | :x: Not supported |
 RegexLiteral  | :x: Not supported |
 Require       | :x: Not supported |
 RespondsTo    | :x: Not supported |
 Return        | :heavy_exclamation_mark: Partial |
 SizeOf        | :x: Not supported | :soon: Coming soon
-StringInterpolation | :x: Not supported |
+StringInterpolation | :white_check_mark: Supported |
 StringLiteral | :white_check_mark: Supported |
 SymbolLiteral | :x: Not supported |
 TupleLiteral  | :x: Not supported |

@@ -1,7 +1,11 @@
 module Cppize
   class Transpiler
     register_node Return do
-      "return" + (node.exp ? " #{transpile node.exp}" : "")
+      if node.exp
+        transpile node.exp, :should_return
+      else
+        "return"
+      end
     end
   end
 end

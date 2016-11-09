@@ -97,6 +97,7 @@ module Cppize
       lines << "#define CPPIZE_NO_EXCEPTIONS" if options.has_key? "no-exceptions"
       lines << "#define CPPIZE_NO_STD_STRING" if options.has_key? "no-std-string"
       lines << "#include <crystal/stdlib.hpp>" unless options.has_key? "no-stdlib"
+      lines << "#include <cstdarg>" unless options.has_key? "no-splats"
       lines.join("\n")
     end
 

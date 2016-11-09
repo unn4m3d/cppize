@@ -14,18 +14,29 @@ module Cppize
 
         args = node.args.map do |arg|
           restr = arg.restriction ? transpile arg.restriction : ARG_TYPE_PREFIX + arg.name
-          def_v = arg.default_value ? " = " + transpile arg.default_value : ""
+          def_v = (arg.default_value ? " = " + transpile arg.default_value : "")
           "#{restr} #{arg.name}#{def_v}"
         end.join(", ")
+
 
         @scopes << Scope.new if @scopes.empty?
         node.args.each do |arg|
           @scopes.first[arg.name] = {symbol_type: :object, value: arg}
         end
 
-        def_type = node.return_type ? transpile node.return_type : "auto"
+        if node.block_arg
+          block = node.block_arg.not_nil!
+          typenames << ARG_TYPE_PREFIX + block.name + "_ret"
+          typenames << "... " + ARG_TYPE_PREFIX + block.name + "_args"
+          pref = ARG_TYPE_PREFIX
+          b_type = "#{pref}#{block.name}_ret, #{pref}#{block.name}_args..."
+          args += "#{args.empty? ? "" : ","} Crystal::Proc<#{b_type}> #{block.name}"
+          @scopes.first[block.name] = {symbol_type: :object, value: block}
+        end
 
-        modifiers = node.receiver.to_s == "self" ? "static " : ""
+        def_type = (node.return_type ? transpile node.return_type : "auto")
+
+        modifiers = (node.receiver.to_s == "self" ? "static " : "")
 
         common_signature = "#{translate_name node.name}(#{args})"
         local_template = (typenames.size > 0 ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
@@ -41,9 +52,9 @@ module Cppize
             typenames += m.sub(/^\</, "").sub(/\>$/, "").split(",").map &.strip
         end
 
-        global_template = (typenames.size > 0 || @template_defs.includes? template_name ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
+        global_template = ((typenames.size > 0 || @template_defs.includes? template_name) ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
 
-        namesp = @current_namespace.empty? ? "" : @current_namespace + "::"
+        namesp = (@current_namespace.empty? ? "" : @current_namespace + "::")
 
         if @in_class
           if @current_visibility != node.visibility

@@ -29,7 +29,7 @@ module TemplateModule2
   include TemplateModule(Int32)
 end
 
-def cool?()
+def cool?(&block)
   if 1
 
   elsif 2
@@ -37,7 +37,7 @@ def cool?()
   else
 
   end
-  return false
+  return block.call
 end
 
 def cppize!
@@ -62,8 +62,14 @@ def main : NativeInt
     printf "world\n"
   end
 
+  cool? do
+    "yes"
+  end
+
+  cool?{"y"}
+
   unless s
-    printf "h#{s}\n"
+    printf "h#{cool?{ "Yes" }}\n"
   end
 
   while 0
