@@ -34,6 +34,7 @@ Macro         | :x: Not supported |
 MacroFor      | :x: Not supported |
 MacroId       | :bangbang: Experimental |
 MacroIf       | :x: Not supported |
+MagicConstant | :x: Not supported |
 ModuleDef     | :heavy_exclamation_mark: Partial |
 MultiAssign   | :x: Not supported |
 NamedArgument | :x: Not supported |
