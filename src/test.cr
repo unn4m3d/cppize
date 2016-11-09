@@ -20,7 +20,7 @@ module MyNamespace
 end
 
 module TemplateModule(T)
-  def to_t(o : Object) : T
+  def to_t(o) : T
     T.new(o)
   end
 end

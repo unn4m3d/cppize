@@ -6,7 +6,7 @@ module Cppize
       end
 
       Lines.new(@failsafe) do |l|
-        l.line "// Generated from #{transpile node.name}", true
+        l.line "// Generated from #{node.name}", true
         l.block("enum class #{transpile node.name}") do
           node.members.each do |member|
             if member.responds_to? :name

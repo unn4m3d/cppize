@@ -16,7 +16,7 @@ module Cppize
           l.block "namespace __fun_def_pseudonyms" do
             l.line "extern \"C\" #{_type} #{node.real_name}(#{args})"
           end
-
+          
           l.block "auto #{node.name}(#{args})" do
             l.line "return __fun_def_pseudonyms::#{node.real_name}(#{node.args.map &.name})"
           end
