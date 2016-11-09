@@ -1,4 +1,3 @@
 language : crystal
 script:
-  - apt search llvm
-  - crystal build ./src/transpiler.cr -s
+  - crystal build ./src/transpiler.cr -s --single-module --emit obj
