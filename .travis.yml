@@ -1,2 +1,4 @@
 language : crystal
-script: crystal build ./src/transpiler.cr
+script:
+  - apt search llvm
+  - crystal build ./src/transpiler.cr -s
