@@ -30,7 +30,14 @@ module TemplateModule2
 end
 
 def cool?()
+  if 1
 
+  elsif 2
+
+  else
+
+  end
+  return false
 end
 
 def cppize!

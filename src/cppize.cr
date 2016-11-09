@@ -19,7 +19,12 @@ module Cppize
     property options
 
     macro register_node(klass,&block)
-      protected def transpile(node : {{klass}}, should_return? : Bool = false)
+      protected def transpile(node : {{klass}}, *tr_options)
+        should_return? = if tr_options.size == 1 && tr_options[0]?.is_a?(Bool) # To keep and old behaviour
+          tr_options[0]?
+        else
+          tr_options.includes?(:should_return)
+        end
         try_tr(node) do
           {{block.body}}
         end
@@ -198,7 +203,7 @@ module Cppize
       "#{d.name}(#{restrictions.map(&.to_s).join(",")})" + (d.return_type ? " : #{d.return_type.to_s}" : "")
     end
 
-    protected def transpile(node : ASTNode, should_return : Bool = false)
+    register_node ASTNode do
       if @failsafe
         "#warning Node type #{node.class} isn't supported yet"
       else
@@ -242,7 +247,7 @@ module Cppize
       ""
     end
 
-    protected def transpile(node : Nil, s : Bool = true)
+    protected def transpile(node : Nil, *o)
       ""
     end
 
@@ -261,7 +266,7 @@ module Cppize
       return ""
     end
 
-    protected def transpile(v : Visibility, s : Bool = false)
+    protected def transpile(v : Visibility, *o)
       return try_tr v do
         case v
         when .public?
