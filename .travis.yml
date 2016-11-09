@@ -1,1 +1,2 @@
 language : crystal
+script: crystal build ./src/transpiler.cr
