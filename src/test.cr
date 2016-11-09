@@ -63,7 +63,7 @@ def main : NativeInt
   end
 
   unless s
-    printf "h\n"
+    printf "h#{s}\n"
   end
 
   while 0
