@@ -56,6 +56,7 @@ def main : NativeInt
   spp = pointerof(s)
   s = "Hello World"
   s += "s"
+  _proc : Int32 -> Int64
   if "Hello"
     printf "%s\n", s
   else

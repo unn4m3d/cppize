@@ -49,6 +49,7 @@ Or            | :white_check_mark: Supported |
 Out           | :x: Not supported |
 Path          | :heavy_exclamation_mark: Partial |
 PointerOf     | :white_check_mark: Supported | Implemented through a function
+ProcLiteral   | :x: Not supported | :soon: Coming soon
 ProcNotation  | :x: Not supported | :soon: Coming soon
 RangeLiteral  | :x: Not supported |
 RegexLiteral  | :x: Not supported |
@@ -63,6 +64,7 @@ TupleLiteral  | :x: Not supported |
 TypeDeclaration | :white_check_mark: Supported |
 TypeNode      | :white_check_mark: Supported |
 UnaryExpression | :x: Not supported |
+Underscore | :x: Not supported |
 UninitializedVar | :x: Not supported | :soon: Coming soon
 Unless        | :white_check_mark: Supported |
 Var           | :bangbang: Experimental |
