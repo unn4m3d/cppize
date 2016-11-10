@@ -10,7 +10,7 @@ module Cppize
         Lines.new do |l|
           l.line nil
           l.block "[&](#{args})" do
-            l.line transpile node.body
+            l.line transpile(node.body,:should_return)
           end
         end.to_s
       end
