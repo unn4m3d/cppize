@@ -25,11 +25,8 @@ Supported features (`-f...`) :
 
 ## Things to improve in already supported AST nodes
 
-1. Add support for ternary if in certain cases
-2. Add support for args without type restrictions
 3. Improve automatic return
 4. Improve module type detection (namespace / includable)
-5. Add support for block args
 
 
 
