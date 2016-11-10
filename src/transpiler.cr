@@ -1,4 +1,5 @@
 require "./cppize"
+require "./colorize"
 
 transpiler = Cppize::Transpiler.new
 code = ""
@@ -6,6 +7,7 @@ input = ""
 use_stdin = false
 output = nil
 use_stdout = false
+do_not_colorize = false
 
 OptionParser.parse! do |opts|
   opts.banner = "Cppize v#{Cppize::VERSION}"
@@ -46,6 +48,21 @@ OptionParser.parse! do |opts|
     puts opts
     exit
   end
+
+  opts.on("-M","--monochrome","Do not colorize errors and warnings") do
+    do_not_colorize = true
+  end
+end
+
+if !do_not_colorize && !use_stdout
+  transpiler.on_error do |e|
+    puts e.to_s.colorize.fore(:red)
+    exit 1
+  end
+
+  transpiler.on_warning do |e|
+    puts e.to_s.colorize.fore(:yellow)
+  end
 end
 
 unless use_stdin
@@ -79,7 +96,7 @@ unless output
   end
 end
 
-code += transpiler.parse_and_transpile(input_c,input )
+code += transpiler.parse_and_transpile(input_c,input)
 
 if use_stdout
   puts code

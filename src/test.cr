@@ -65,6 +65,8 @@ def main : NativeInt
     printf "world\n"
   end
 
+  r = (0..10)
+
   cool? do
     "yes"
   end

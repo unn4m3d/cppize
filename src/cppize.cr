@@ -136,8 +136,8 @@ module Cppize
           code,
         ].map(&.to_s).join("\n\n")
       rescue e : Error
-        puts e.to_s
-        exit
+        @on_error.call(e)
+        ""
       end
     end
 
@@ -197,6 +197,36 @@ module Cppize
 
         str
       end
+    end
+
+    alias ErrorHandler = Error -> (Void|NoReturn)
+
+    @on_error : ErrorHandler
+    @on_warning : ErrorHandler
+
+    @on_error = ->(e : Error){
+      puts e.to_s
+      exit 1
+    }
+
+    @on_warning = ->(e : Error){
+      puts "/*WARNING :\n #{e.message}\n*/"
+    }
+
+    def on_warning(&o : ErrorHandler)
+      @on_warning = o
+    end
+
+    def on_error(&o : ErrorHandler)
+      @on_error = o
+    end
+
+    def warning(w : Error)
+      @on_warning.call(w)
+    end
+
+    def warning(m : String, n : ASTNode?=nil, c : Error?=nil, f : String = @current_filename)
+      warning(Error.new m,n,c,f)
     end
 
     protected def pretty_signature(d : Def) : String
