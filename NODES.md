@@ -9,7 +9,7 @@ ArrayLiteral  | :x: Not supported |
 Assign        | :white_check_mark: Supported |
 BinaryOp      | :x: Not supported |
 Block         | :white_check_mark: Supported |
-BoolLiteral   | :white_check_mark: Supported |
+BoolLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 Break         | :white_check_mark: Supported |
 Call          | :heavy_exclamation_mark: Partial | :warning: `NamedArgument`s are not supported
 Case          | :x: Not supported | :soon: Coming soon
@@ -44,13 +44,13 @@ NilableCast   | :x: Not supported |
 NilLiteral    | :x: Not supported |
 Nop           | :white_check_mark: Supported |
 Not           | :x: Not supported |
-NumberLiteral | :white_check_mark: Supported |
+NumberLiteral | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 Or            | :white_check_mark: Supported |
 Out           | :x: Not supported |
 Path          | :heavy_exclamation_mark: Partial |
-PointerOf     | :white_check_mark: Supported | Implemented through a function
+PointerOf     | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 ProcLiteral   | :x: Not supported | :soon: Coming soon
-ProcNotation  | :x: Not supported | :soon: Coming soon
+ProcNotation  | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 RangeLiteral  | :x: Not supported |
 RegexLiteral  | :x: Not supported |
 Require       | :x: Not supported |
@@ -58,7 +58,7 @@ RespondsTo    | :x: Not supported |
 Return        | :heavy_exclamation_mark: Partial |
 SizeOf        | :heavy_exclamation_mark: Partial | :warning: Behaves the same way as `InstanceSizeOf`
 StringInterpolation | :white_check_mark: Supported |
-StringLiteral | :white_check_mark: Supported |
+StringLiteral | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 SymbolLiteral | :x: Not supported |
 TupleLiteral  | :x: Not supported |
 TypeDeclaration | :white_check_mark: Supported |
