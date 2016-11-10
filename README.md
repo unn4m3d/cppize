@@ -1,5 +1,7 @@
 # cppize
 
+![Build status](https://travis-ci.org/unn4m3d/cppize.svg?branch=master)
+
 Crystal-to-C++ transpiler [WIP]
 
 Generated code can be compiled with c++14 compiler (tested with g++ 6.2.0)
