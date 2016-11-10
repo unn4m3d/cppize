@@ -3,7 +3,7 @@ AST Nodes support:
 
 Node          | Status        | Notes
 --------------|---------------|--------------
-And           | :x: Not supported | :soon: Coming soon
+And           | :white_check_mark: Supported |
 Arg           | :heavy_exclamation_mark: Partial |
 ArrayLiteral  | :x: Not supported |
 Assign        | :white_check_mark: Supported |
@@ -45,7 +45,7 @@ NilLiteral    | :x: Not supported |
 Nop           | :white_check_mark: Supported |
 Not           | :x: Not supported |
 NumberLiteral | :white_check_mark: Supported |
-Or            | :x: Not supported | :soon: Coming soon
+Or            | :white_check_mark: Supported |
 Out           | :x: Not supported |
 Path          | :heavy_exclamation_mark: Partial |
 PointerOf     | :white_check_mark: Supported | Implemented through a function

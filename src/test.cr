@@ -30,9 +30,9 @@ module TemplateModule2
 end
 
 def cool?(&block)
-  if 1
+  if 1 && 3
 
-  elsif 2
+  elsif 2 || 4
 
   else
 
