@@ -49,7 +49,7 @@ Or            | :white_check_mark: Supported |
 Out           | :x: Not supported |
 Path          | :heavy_exclamation_mark: Partial |
 PointerOf     | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
-ProcLiteral   | :x: Not supported | :soon: Coming soon
+ProcLiteral   | :white_check_mark: Supported|
 ProcNotation  | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 RangeLiteral  | :x: Not supported |
 RegexLiteral  | :x: Not supported |

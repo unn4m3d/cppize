@@ -57,6 +57,8 @@ def main : NativeInt
   s = "Hello World"
   s += "s"
   _proc : Int32 -> Int64
+
+  proc = ->(x : Int32){Int64.new(x)}
   if "Hello"
     printf "%s\n", s
   else
