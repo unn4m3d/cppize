@@ -17,9 +17,11 @@ Cast          | :x: Not supported |
 CharLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 ClassDef      | :x: Not supported |
 ClassVar      | :x: Not supported |
+CStructOrUnionDef | :x: Not supported |
 Def           | :heavy_exclamation_mark: Partial | :warning: No class/instance defs as ClassDefs are not implemented<br>:warning: Splats are not supported
 EnumDef       | :heavy_exclamation_mark: Partial | :warning: Only enums without base type are supported
 Expressions   | :white_check_mark: Supported |
+ExternalVar   | :heavy_exclamation_mark: Partial | :warning:
 FunDef        | :white_check_mark: Supported |
 Generic       | :white_check_mark: Supported |
 Global        | :bangbang: Experimental |
