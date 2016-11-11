@@ -33,11 +33,12 @@ module Cppize
 
     @forward_decl_classes = Lines.new
     @forward_decl_defs = Lines.new
-    @vars = Lines.new
+    @global_vars = Lines.new
     @lib_defs = Lines.new
     @classes = Lines.new
     @defs = Lines.new
     @unions = Hash(String, String).new
+    @globals_list = [] of String
 
     @options = Hash(String, String?).new
 
@@ -127,6 +128,8 @@ module Cppize
           @forward_decl_classes,
           "/* :CPPIZE: Functions' forward declarations */",
           @forward_decl_defs,
+          "/* :CPPIZE: Global vars */",
+          @global_vars
           "/* :CPPIZE: Bindings */",
           @lib_defs,
           "/* :CPPIZE: Classes */",
