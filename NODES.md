@@ -41,7 +41,7 @@ ModuleDef     | :heavy_exclamation_mark: Partial |
 MultiAssign   | :x: Not supported |
 NamedArgument | :x: Not supported |
 NamedTupleLiteral | :x: Not supported |
-Next          | :white_check_mark: Supported |
+Next          | :heavy_exclamation_mark: Partial | :warning: Doesn't exits the block<br> :warning: Cannot have a value
 NilableCast   | :x: Not supported |
 NilLiteral    | :white_check_mark: Supported |
 Nop           | :white_check_mark: Supported |
