@@ -5,7 +5,7 @@ Node          | Status        | Notes
 --------------|---------------|--------------
 And           | :white_check_mark: Supported |
 Arg           | :heavy_exclamation_mark: Partial |
-ArrayLiteral  | :heavy_exclamation_mark: Partial | :warning: Empty array literals without type restrictions are not supported
+ArrayLiteral  | :heavy_exclamation_mark: Partial | :warning: Empty array literals without type restrictions are not supported<br> :warning: Needs to be implemented in stdlib
 Assign        | :white_check_mark: Supported |
 BinaryOp      | :white_check_mark: Supported |
 Block         | :white_check_mark: Supported |
@@ -22,7 +22,7 @@ EnumDef       | :heavy_exclamation_mark: Partial | :warning: Only enums without 
 Expressions   | :white_check_mark: Supported |
 FunDef        | :white_check_mark: Supported |
 Generic       | :white_check_mark: Supported |
-Global        | :bangbang: Experimental | 
+Global        | :bangbang: Experimental |
 HashLiteral   | :x: Not supported |
 If            | :white_check_mark: Supported |
 ImplicitObj   | :x: Not supported |
@@ -43,7 +43,7 @@ Next          | :white_check_mark: Supported |
 NilableCast   | :x: Not supported |
 NilLiteral    | :x: Not supported |
 Nop           | :white_check_mark: Supported |
-Not           | :x: Not supported |
+Not           | :white_check_mark: Supported |
 NumberLiteral | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 Or            | :white_check_mark: Supported |
 Out           | :x: Not supported |
