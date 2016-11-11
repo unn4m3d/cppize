@@ -5,7 +5,7 @@ Node          | Status        | Notes
 --------------|---------------|--------------
 And           | :white_check_mark: Supported |
 Arg           | :heavy_exclamation_mark: Partial |
-ArrayLiteral  | :x: Not supported |
+ArrayLiteral  | :heavy_exclamation_mark: Partial | :warning: Empty array literals without type restrictions are not supported
 Assign        | :white_check_mark: Supported |
 BinaryOp      | :white_check_mark: Supported |
 Block         | :white_check_mark: Supported |
