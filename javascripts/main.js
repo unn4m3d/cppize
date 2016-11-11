@@ -20,6 +20,7 @@ window.onload = function(){
           $("#output code").text(data.code);
         }
       },
+      crossDomain : true,
       error : function(e,ee,eee){
         console.log(e);
         console.log(ee);
