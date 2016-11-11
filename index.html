@@ -12,6 +12,8 @@
     <script src="javascripts/prism.js" async></script>
     <script src="javascripts/codeflask.js" async></script>
     <script src="javascripts/main.js" async></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" async></script>
+
     <title>Cppize by unn4m3d</title>
   </head>
 
@@ -32,7 +34,16 @@
 
     <div class="container">
       <section id="main_content">
-        <div id="crystal-code-wrapper">
+        <div id="crystal-code-wrapper" style="color:transparent;"></div>
+        <div id="transpile-button">
+          <button>Transpile!</button>
+        </div>
+        <div id="output">
+          <pre>
+            <code class="language-c++">
+              /* Transpiled C++ code will appear here */
+            </code>
+          </pre>
         </div>
       </section>
     </div>
