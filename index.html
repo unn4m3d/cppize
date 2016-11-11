@@ -7,7 +7,10 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
+    <link rel="stylesheet" type="text/css" href="stylesheets/prism.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/codeflask.css">
+    <script src="javascripts/prism.js" async></script>
+    <script src="javascripts/codeflask.js" async></script>
     <title>Cppize by unn4m3d</title>
   </head>
 
@@ -28,14 +31,15 @@
 
     <div class="container">
       <section id="main_content">
-        <h1>
-<a id="cppize---crystal-to-c-transpiler" class="anchor" href="#cppize---crystal-to-c-transpiler" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cppize - Crystal to C++ transpiler</h1>
-
-<h2>
-<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h2>
+        <div id="crystal-code-wrapper">
+        </div>
+        <script>
+          var f = new CodeFlask;
+          f.run("#crystal-code-wrapper",{language: "crystal"})
+        </script>
       </section>
     </div>
 
-    
+
   </body>
 </html>
