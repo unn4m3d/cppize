@@ -7,7 +7,7 @@ And           | :white_check_mark: Supported |
 Arg           | :heavy_exclamation_mark: Partial |
 ArrayLiteral  | :x: Not supported |
 Assign        | :white_check_mark: Supported |
-BinaryOp      | :x: Not supported |
+BinaryOp      | :white_check_mark: Supported |
 Block         | :white_check_mark: Supported |
 BoolLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 Break         | :white_check_mark: Supported |
