@@ -12,7 +12,7 @@ Block         | :white_check_mark: Supported |
 BoolLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 Break         | :white_check_mark: Supported |
 Call          | :heavy_exclamation_mark: Partial | :warning: `NamedArgument`s are not supported
-Case          | :x: Not supported | :soon: Coming soon
+Case          | :heavy_exclamation_mark: Partial | :warning: This is **NOT** expression <br> :warning: Break inside case may cause undefined behaviour
 Cast          | :x: Not supported |
 CharLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 ClassDef      | :x: Not supported |
@@ -69,5 +69,5 @@ UninitializedVar | :x: Not supported | :soon: Coming soon
 Unless        | :white_check_mark: Supported |
 Var           | :bangbang: Experimental |
 VisibilityModifier | :white_check_mark: Supported |
-When          | :x: Not supported |
+When          | :white_check_mark: Supported
 While         | :white_check_mark: Supported |
