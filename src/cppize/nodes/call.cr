@@ -8,7 +8,7 @@ module Cppize
       @@macros[name.to_s] = block
     end
 
-    CPP_OPERATORS = %w(+ - * / % >> << >= <= > < == != & && | || ^)
+    CPP_OPERATORS = %w(+ - * / % >> << >= <= > < == != & && | || ^ ~)
 
     ADDITIONAL_OPERATORS = {
       "==="   => "equals",
