@@ -26,7 +26,7 @@ window.onload = function(){
         console.log(eee);
         $("#output code").text("/*Request Error ! See console for more info*/");
       },
-      url: "http://cppize-aas.herokuapp.com"
+      url: "https://cppize-aas.herokuapp.com"
     });
   });
 };
