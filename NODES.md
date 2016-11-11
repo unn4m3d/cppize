@@ -41,7 +41,7 @@ NamedArgument | :x: Not supported |
 NamedTupleLiteral | :x: Not supported |
 Next          | :white_check_mark: Supported |
 NilableCast   | :x: Not supported |
-NilLiteral    | :x: Not supported |
+NilLiteral    | :white_check_mark: Supported |
 Nop           | :white_check_mark: Supported |
 Not           | :white_check_mark: Supported |
 NumberLiteral | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
