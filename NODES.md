@@ -22,7 +22,7 @@ EnumDef       | :heavy_exclamation_mark: Partial | :warning: Only enums without 
 Expressions   | :white_check_mark: Supported |
 FunDef        | :white_check_mark: Supported |
 Generic       | :white_check_mark: Supported |
-Global        | :heavy_exclamation_mark: Partial | :warning: Supported only in type declarations (Useless) 
+Global        | :bangbang: Experimental | 
 HashLiteral   | :x: Not supported |
 If            | :white_check_mark: Supported |
 ImplicitObj   | :x: Not supported |
