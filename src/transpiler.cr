@@ -8,12 +8,14 @@ use_stdin = false
 output = nil
 use_stdout = false
 do_not_colorize = false
+verbose = false
 
 OptionParser.parse! do |opts|
   opts.banner = "Cppize v#{Cppize::VERSION}"
 
   opts.on("-v", "--version", "Prints version and exits") do
     puts "#{Cppize::VERSION}"
+    puts "Compiled on {{ Time.now.to_s("%c") }}"
     exit
   end
 
@@ -52,6 +54,10 @@ OptionParser.parse! do |opts|
   opts.on("-M","--monochrome","Do not colorize errors and warnings") do
     do_not_colorize = true
   end
+
+  opts.on("-V","--verbose","Run verbosely") do
+    verbose = true
+  end
 end
 
 if !do_not_colorize && !use_stdout
@@ -61,7 +67,11 @@ if !do_not_colorize && !use_stdout
   end
 
   transpiler.on_warning do |e|
-    puts e.to_s.colorize.fore(:yellow)
+    if verbose
+      puts e.to_s.colorize.fore(:yellow)
+    else
+      puts e.message.colorize.fore(:yellow)
+    end
   end
 end
 
