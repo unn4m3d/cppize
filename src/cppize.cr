@@ -17,6 +17,8 @@ module Cppize
 
   class Transpiler
     property options
+    
+    STDLIB_NAMESPACE = "Crystal"
 
     macro register_node(klass,&block)
       protected def transpile(node : {{klass}}, *tr_options)
@@ -254,7 +256,7 @@ module Cppize
 
         return "__crystal__unions::#{@unions[_n]}"
       elsif CORE_TYPES.includes?(_n)
-        "Crystal::#{_n}"
+        "#{STDLIB_NAMESPACE}::#{_n}"
       elsif BUILTIN_TYPES.includes?(_n)
         _n.downcase
       else
