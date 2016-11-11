@@ -5,7 +5,7 @@ module Cppize
       case node.var
       when Var
         @scopes.first[node.var.as(Var).name] = {symbol_type: :object, value: node.var}
-        "#{transpile node.declared_type} #{translate_name node.var.as(Var).name}"
+        return "#{transpile node.declared_type} #{translate_name node.var.as(Var).name}"
       when Global
         @scopes.last[node.var.as(Global).name] = {symbol_type: :object, value: node.var}
         unless @globals_list.includes? node.var.as(Global).name
@@ -14,11 +14,12 @@ module Cppize
             @global_vars.line "#{transpile node.declared_type} #{translate_name node.var.as(Global).name}"
           end
 
-          ""
+          return ""
         end
       else
         raise Error.new("Node type #{node.var.class.name} isn't supported in type declarations yet",node.var,nil,@current_filename)
       end
+      ""
     end
   end
 end
