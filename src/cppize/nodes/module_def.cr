@@ -7,27 +7,31 @@ module Cppize
       if !node.type_vars.nil?
         tv = node.type_vars.as(Array(String))
         @forward_decl_classes.line "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name}"
-
-        @classes.block "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name} #{ancestors}" do
+        if includes.empty?
+          @classes[get_name node.name] = ClassData.new(get_name(node.name))
+        else
+          @classes[get_name node.name] = ClassData.new(get_name(node.name), *(Tuple(String).from includes.map{|x| get_name(x).split(NAMES_DELIMITER)}.flatten))
+        end
+        @classes[get_name node.name].block "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name} #{ancestors}" do
           @current_visibility = nil
           old_class, @current_class = @current_class, @current_class + "::" + node.name.to_s + "<#{tv.join(", ")}>"
           old_in_class, @in_class = @in_class, true
-          @classes.line transpile node.body
+          @classes[get_name node.name].line transpile node.body
           @in_class, @current_class = old_in_class, old_class
         end
-        @classes.line ""
+        @classes[get_name node.name].line ""
         ""
       elsif includes.size > 0
         @forward_decl_classes.line "class #{node.name}"
-
-        @classes.block "class #{node.name} #{ancestors}" do
+        @classes[get_name node.name] = ClassData.new(get_name(node.name), *(Tuple(String).from includes.map{|x| get_name(x).split(NAMES_DELIMITER)}.flatten))
+        @classes[get_name node.name].block "class #{node.name} #{ancestors}" do
           @current_visibility = nil
           old_class, @current_class = @current_class, @current_class + "::" + node.name.to_s
           old_in_class, @in_class = @in_class, true
-          @classes.line transpile node.body
+          @classes[get_name node.name].line transpile node.body
           @in_class, @current_class = old_in_class, old_class
         end
-        @classes.line ""
+        @classes[get_name node.name].line ""
         ""
       else
         Lines.new(@failsafe) do |l|
