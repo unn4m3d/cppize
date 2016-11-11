@@ -30,7 +30,7 @@ module Cppize
           typenames << "... " + ARG_TYPE_PREFIX + block.name + "_args"
           pref = ARG_TYPE_PREFIX
           b_type = "#{pref}#{block.name}_ret, #{pref}#{block.name}_args..."
-          args += "#{args.empty? ? "" : ","} Crystal::Proc<#{b_type}> #{block.name}"
+          args += "#{args.empty? ? "" : ","} #{STDLIB_NAMESPACE}::Proc<#{b_type}> #{block.name}"
           @scopes.first[block.name] = {symbol_type: :object, value: block}
         end
 
