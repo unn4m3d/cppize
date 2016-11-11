@@ -129,7 +129,7 @@ module Cppize
           "/* :CPPIZE: Functions' forward declarations */",
           @forward_decl_defs,
           "/* :CPPIZE: Global vars */",
-          @global_vars
+          @global_vars,
           "/* :CPPIZE: Bindings */",
           @lib_defs,
           "/* :CPPIZE: Classes */",
