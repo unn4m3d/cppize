@@ -76,7 +76,7 @@ module Cppize
           end
 
         else
-          global_signature = "#{global_template} #{modifiers} #{def_type} #{namesp}#{common_signature}"
+          #global_signature = "#{global_template} #{modifiers} #{def_type} #{namesp}#{common_signature}"
 
           if namesp.empty?
             @forward_decl_defs.line local_signature
@@ -86,7 +86,7 @@ module Cppize
             end
           end
 
-          l.block global_signature do
+          l.block local_signature do
             if def_type == "void"
               l.line transpile(node.body)
             else
