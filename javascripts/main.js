@@ -20,10 +20,11 @@ window.onload = function(){
           $("#output code").text(data.code);
         }
       },
-      error : function(e,ee){
+      error : function(e,ee,eee){
         console.log(e);
         console.log(ee);
-        $("#output code").text("/*Error ! See console for more info*/");
+        console.log(eee);
+        $("#output code").text("/*Request Error ! See console for more info*/");
       },
       url: "http://cppize-aas.herokuapp.com"
     });
