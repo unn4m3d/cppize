@@ -14,7 +14,7 @@ Break         | :white_check_mark: Supported |
 Call          | :heavy_exclamation_mark: Partial | :warning: `NamedArgument`s are not supported
 Case          | :x: Not supported | :soon: Coming soon
 Cast          | :x: Not supported |
-CharLiteral   | :x: Not supported |
+CharLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 ClassDef      | :x: Not supported |
 ClassVar      | :x: Not supported |
 Def           | :heavy_exclamation_mark: Partial | :warning: No class/instance defs as ClassDefs are not implemented<br>:warning: Splats are not supported
