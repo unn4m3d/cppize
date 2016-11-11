@@ -27,7 +27,7 @@ OptionParser.parse! do |opts|
     end
   end
 
-  opts.on("-d", "--transpiler-defines", "Tells transpiler to use internal conditional compilation system instead of placing #define's in code") do
+  opts.on("-d", "--preprocessor-defines", "Tells transpiler to use C preprocessor instead of internal conditional compilation system") do
     transpiler.use_preprocessor_defs = true
   end
 
