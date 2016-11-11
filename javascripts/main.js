@@ -1,1 +1,4 @@
-console.log('This would be the main JS file.');
+window.onload = function(){
+  var flask = new CodeFlask;
+  flask.run("#crystal-code-wrapper",{language: "crystal"});
+};

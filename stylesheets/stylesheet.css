@@ -245,3 +245,10 @@ a {
 .cf {
   zoom:1;
 }
+
+#crystal-code-wrapper{
+  position:  relative;
+  min-height: 300px;
+  max-height: 100%;
+  width : 100%;
+}
