@@ -14,7 +14,7 @@ module Cppize
 
           if node.else
             l.line "default:",true
-            l.line transpile node.else.not_nil!.body
+            l.line transpile node.else
             l.line "break"
           end
         end
