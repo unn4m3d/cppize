@@ -1,11 +1,11 @@
 window.onload = function(){
-  var crystal = CodeMirror.fromTextArea($("#crystal-code-wrapper>textarea").context,{language:"crystal"});
-  var cpp = CodeMirror($("#cpp-code-wrapper").context,{value:"/* C++ code would appear here */",language:"clike"});
+  var crystal = CodeMirror.fromTextArea(document.querySelector("#crystal-code-wrapper>textarea"),{mode:"crystal"});
+  var cpp = CodeMirror(document.querySelector("#cpp-code-wrapper"),{value:"/* C++ code would appear here */",mode:"clike"});
 
 
 
   //Jackbox.init();
-  $("#transpile-button>button").click(function(){
+  $("#tbtn-wrapper>button").click(function(){
     $.ajax({
       method: "POST",
       data: crystal.getValue(),
