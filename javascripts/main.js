@@ -6,6 +6,7 @@ window.onload = function(){
 
   Jackbox.init();
   $("#tbtn-wrapper>button").click(function(){
+    Jackbox.information("Transpiling...");
     $.ajax({
       method: "POST",
       data: crystal.getValue(),
@@ -26,6 +27,10 @@ window.onload = function(){
             console.error(e);
             Jackbox.error(e.message + " ! See console for more info");
           });
+          if(data.errors.length < 1)
+          {
+            Jackbox.success("Transpiled successfully");
+          }
           cpp.setValue(data.code);
         }
       },
@@ -39,4 +44,5 @@ window.onload = function(){
       url: "https://cppize-aas.herokuapp.com"
     });
   });
+  Jackbox.information("Cppize transpiler is ready!");
 };
