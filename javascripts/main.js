@@ -4,7 +4,7 @@ window.onload = function(){
 
 
 
-  //Jackbox.init();
+  Jackbox.init();
   $("#tbtn-wrapper>button").click(function(){
     $.ajax({
       method: "POST",
@@ -18,6 +18,14 @@ window.onload = function(){
         }
         else
         {
+          data.warnings.forEach(function(e){
+            console.warning(e);
+            Jackbox.warning(e.message + " ! See console for more info");
+          });
+          data.errors.forEach(function(e){
+            console.error(e);
+            Jackbox.error(e.message + " ! See console for more info");
+          });
           cpp.setValue(data.code);
         }
       },
@@ -26,7 +34,7 @@ window.onload = function(){
         console.log(e);
         console.log(ee);
         console.log(eee);
-        cpp.setValue("/*Request Error ! See console for more info*/");
+        Jackbox.error("RequestError! See console for more info");
       },
       url: "https://cppize-aas.herokuapp.com"
     });
