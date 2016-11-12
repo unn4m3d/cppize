@@ -2,6 +2,7 @@ window.onload = function(){
   var flask = new CodeFlask;
   var code = "";
   flask.run("#crystal-code-wrapper",{language: "crystal"});
+  flask.update("# Put your crystal code here \n\ndef main\n\n  puts \"Hello world\"\nend");
   flask.onUpdate(function(c){code = c});
   //Jackbox.init();
   $("#transpile-button>button").click(function(){
