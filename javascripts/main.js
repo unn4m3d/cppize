@@ -7,9 +7,13 @@ window.onload = function(){
   Jackbox.init();
   $("#tbtn-wrapper>button").click(function(){
     Jackbox.information("Transpiling...");
+    var code = crystal.getValue();
+    $("#tbtn-wrapper input[type=checkbox]").each(function(){
+      code += "\n#=:cppize-feature:= " + $(this).data("option") + "\n\n";
+    });
     $.ajax({
       method: "POST",
-      data: crystal.getValue(),
+      data: code,
       dataType : "json",
       success : function(data){
         console.log(data);
@@ -20,7 +24,7 @@ window.onload = function(){
         else
         {
           data.warnings.forEach(function(e){
-            console.warning(e);
+            console.warn(e);
             Jackbox.warning(e.message + " ! See console for more info");
           });
           data.errors.forEach(function(e){
