@@ -8,6 +8,10 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" async></script>
+    <script src="javascripts/prism.js" async></script>
+    <script src="javascripts/codeflask.js" async></script>
+    <script src="javascripts/main.js" async></script>
   </head>
   <body>
     <section class="page-header">
@@ -19,8 +23,18 @@
     </section>
 
     <section class="main-content">
-      <h2>
-<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h2>
+
+      <div id="crystal-code-wrapper" style="color:transparent;"></div>
+        <div id="transpile-button">
+          <button>Transpile!</button>
+        </div>
+        <div id="output">
+          <pre>
+            <code class="language-c++">
+              /* Transpiled C++ code will appear here */
+            </code>
+          </pre>
+        </div>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/unn4m3d/cppize">Cppize</a> is maintained by <a href="https://github.com/unn4m3d">unn4m3d</a>.</span>
@@ -30,6 +44,6 @@
 
     </section>
 
-  
+
   </body>
 </html>

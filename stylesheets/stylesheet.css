@@ -243,3 +243,9 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+
+#crystal-code-wrapper{
+  width : 100%;
+  height : 250px;
+  position: relative;
+}
