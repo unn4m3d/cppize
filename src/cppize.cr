@@ -17,7 +17,7 @@ module Cppize
 
   class Transpiler
     property options
-    
+
     STDLIB_NAMESPACE = "Crystal"
 
     macro register_node(klass,&block)
@@ -189,6 +189,21 @@ module Cppize
         end
 
         str
+      end
+
+      def to_json
+        {
+          message: self.message,
+          backtrace: self.backtrace,
+          nodes: node_stack.map do |x|
+            {
+              node_type: x.class.name,
+              node_start: l2s(x.location, @real_filename),
+              node_end: l2s(x.end_location, @real_filename),
+            }
+          end,
+          filename: @real_filename
+        }.to_json
       end
     end
 
