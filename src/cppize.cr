@@ -52,6 +52,7 @@ module Cppize
     @current_class = ""
     @current_visibility : Visibility? = nil
     @current_filename = "<unknown>"
+    @ast : ASTNode?
 
     def find_var(name : String) : NamedTuple(symbol_type: Symbol, value: ASTNode?)
       if name == "self"
@@ -107,7 +108,8 @@ module Cppize
     def parse_and_transpile(code : String, file : String = "<unknown>")
       begin
         @current_filename = file
-        code = transpile Parser.parse(code)
+        @ast = Parser.parse(code)
+        code = transpile @ast
         # predef = Lines.new(@failsafe) do |l|
         # end.to_s
 

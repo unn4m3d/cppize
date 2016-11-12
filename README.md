@@ -20,6 +20,7 @@ Flag  | Description
 ------|---------------
 `-funsafe-cast` | Tells transpiler to transpile casts to C-style casts instead of `static_cast`s
 `-fprimitive-types` | Tells transpiler to use fundamental C++ types when possible
+`-fauto-module-type`| Allows transpiler to detect if module is included <br> :warning: This option can slow down transpilation
 
 ## Library Usage
 ```crystal

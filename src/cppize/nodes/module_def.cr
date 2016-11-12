@@ -3,7 +3,12 @@ module Cppize
     register_node ModuleDef do
       includes = node.search_of_type(Include)
       ancestors = includes.size > 0 ? ": #{includes.map { |x| "public virtual " + transpile x.as(Include).name }.join(", ")}" : ""
-
+      included? = false
+      if options.has_key? "auto-module-type"
+        included? = (@ast.not_nil!.search_of_type(Include,true).count do |x|
+          x.as(Include).name.to_s.sub(/^::/,"") == (@current_namespace.empty? ? "" : @current_namespace + "::") + node.name.to_s
+        end)
+      end
       if !node.type_vars.nil?
         tv = node.type_vars.as(Array(String))
         @forward_decl_classes.line "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name}"
@@ -21,7 +26,7 @@ module Cppize
         end
         @classes[get_name node.name].line ""
         ""
-      elsif includes.size > 0
+      elsif includes.size > 0 || included?
         @forward_decl_classes.line "class #{node.name}"
         @classes[get_name node.name] = ClassData.new(get_name(node.name), *(Tuple(String).from includes.map{|x| get_name(x).split(NAMES_DELIMITER)}.flatten))
         @classes[get_name node.name].block "class #{node.name} #{ancestors}" do
