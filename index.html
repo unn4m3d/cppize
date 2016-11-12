@@ -9,11 +9,11 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
     <script src="javascripts/jquery.min.js" async></script>
-    <script src="javascripts/prism.js" async></script>
-    <script src="javascripts/codeflask.js" async></script>
+    <script src="javascripts/codemirror.js" async></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/codemirror.css">
     <script src="javascripts/main.js" async></script>
-    <link rel="stylesheet" type="text/css" href="stylesheets/prism.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/codeflask.css">
+    <script src="javascripts/mode/clike/clike.js" async></script>
+    <script src="javascripts/mode/crystal/crystal.js" async></script>
   </head>
   <body>
     <section class="page-header">
@@ -26,17 +26,21 @@
 
     <section class="main-content">
 
-      <div id="crystal-code-wrapper" style="color:transparent;"></div>
-        <div id="transpile-button">
-          <button>Transpile!</button>
-        </div>
-        <div id="output">
-          <pre>
-            <code class="language-c++">
-              /* Transpiled C++ code will appear here */
-            </code>
-          </pre>
-        </div>
+      <div id="crystal-code-wrapper" style="color:transparent;">
+          <textarea class="codemirror">
+            # Put your crystal code here
+
+            def main
+              0i32
+            end
+          </textarea>
+      </div>
+      <div id="tbtn-wrapper">
+        <button>Transpile!</button>
+      </div>
+
+      <div id="cpp-code-wrapper">
+      </div>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/unn4m3d/cppize">Cppize</a> is maintained by <a href="https://github.com/unn4m3d">unn4m3d</a>.</span>

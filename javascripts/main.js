@@ -1,24 +1,24 @@
 window.onload = function(){
-  var flask = new CodeFlask;
-  var code = "";
-  flask.run("#crystal-code-wrapper",{language: "crystal"});
-  flask.update("# Put your crystal code here \n\ndef main\n\n  puts \"Hello world\"\nend");
-  flask.onUpdate(function(c){code = c});
+  var crystal = CodeMirror.fromTextArea($("#crystal-code-wrapper>textarea").context,{language:"crystal"});
+  var cpp = CodeMirror($("#cpp-code-wrapper").context,{value:"/* C++ code would appear here */",language:"clike"});
+
+
+
   //Jackbox.init();
   $("#transpile-button>button").click(function(){
     $.ajax({
       method: "POST",
-      data: code,
+      data: crystal.getValue(),
       dataType : "json",
       success : function(data){
         console.log(data);
         if(data.error)
         {
-          $("#output code").text("/*Error ! See console for more info*/");
+          cpp.setValue("/*Error ! See console for more info*/");
         }
         else
         {
-          $("#output code").text(data.code);
+          cpp.setValue(data.code);
         }
       },
       crossDomain : true,
@@ -26,7 +26,7 @@ window.onload = function(){
         console.log(e);
         console.log(ee);
         console.log(eee);
-        $("#output code").text("/*Request Error ! See console for more info*/");
+        cpp.setValue("/*Request Error ! See console for more info*/");
       },
       url: "https://cppize-aas.herokuapp.com"
     });
