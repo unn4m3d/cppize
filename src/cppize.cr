@@ -191,7 +191,7 @@ module Cppize
         str
       end
 
-      def to_json
+      def to_h
         {
           message: self.message,
           backtrace: self.backtrace,
@@ -203,7 +203,11 @@ module Cppize
             }
           end,
           filename: @real_filename
-        }.to_json
+        }.to_h
+      end
+
+      def to_json
+        to_h.to_json
       end
     end
 
