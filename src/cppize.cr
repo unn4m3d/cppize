@@ -267,7 +267,7 @@ module Cppize
     end
 
     register_node Union do
-      "Crystal::Union< #{node.types.map{|x| transpile x}.join(", ")} >"
+      "#{STDLIB_NAMESPACE}::Union< #{node.types.map{|x| transpile x}.join(", ")} >"
     end
 
     register_node TypeNode do
