@@ -289,7 +289,7 @@ div.CodeMirror{
   border-radius: 5px;
 }
 
-.modal-content{
+#modal-content{
   overflow: scroll;
   height:95%;
 }
