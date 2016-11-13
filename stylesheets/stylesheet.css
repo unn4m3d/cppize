@@ -293,3 +293,7 @@ div.CodeMirror{
   overflow: scroll;
   height:95%;
 }
+
+pre{
+  overflow : visible;
+}
