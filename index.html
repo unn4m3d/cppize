@@ -15,6 +15,8 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/codemirror.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/jackbox.css">
     <script src="javascripts/jackbox.min.js"></script>
+    <script src="javascripts/the-modal.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/the-modal.css">
     <script src="javascripts/main.js" async></script>
   </head>
   <body>
@@ -52,6 +54,12 @@ end
       <div id="cpp-code-wrapper">
       </div>
 
+      <div class="modal" id="msg-modal" style="display:none;">
+        <a href="#" class="close">×</a>
+        <div id="modal-header"></div>
+        <div id="modal-content">Loading...</div>
+      </div>
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/unn4m3d/cppize">Cppize</a> is maintained by <a href="https://github.com/unn4m3d">unn4m3d</a>.</span>
         <span class="site-footer-credits"><a href="https://github.com/codemirror/codemirror">Codemirror</a> is used for code editor</span>.<br/>
@@ -61,7 +69,6 @@ end
       </footer>
 
     </section>
-
 
   </body>
 </html>

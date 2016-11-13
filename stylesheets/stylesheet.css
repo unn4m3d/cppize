@@ -254,3 +254,37 @@ div.CodeMirror{
   border : 2px solid grey;
   border-radius: 10px;
 }
+
+.modal{
+  display: block;
+  position: fixed;
+  left:10%;
+  width: 80%;
+  top: 25%;
+  height: 50%;
+  background-color: white;
+  border: 3px solid #159957;
+  border-radius: 25px;
+  padding: 25px;
+}
+.modal #modal-header{
+  border-bottom: 1px solid #159957;
+  text-transform: capitalize;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.modal .warning{
+  color : orange;
+}
+
+.modal .error{
+  color: brown;
+}
+
+.modal .close{
+  border : 1px solid #159957;
+  width : 15px;
+  height: 15px;
+  border-radius: 5px;
+}
