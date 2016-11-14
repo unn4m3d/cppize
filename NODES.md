@@ -55,7 +55,7 @@ ProcLiteral   | :white_check_mark: Supported|
 ProcNotation  | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 RangeLiteral  | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 RegexLiteral  | :x: Not supported |
-Require       | :x: Not supported |
+Require       | :heavy_exclamation_mark: Partial | :warning: `*` and `**` are not supported
 RespondsTo    | :x: Not supported |
 Return        | :heavy_exclamation_mark: Partial |
 SizeOf        | :heavy_exclamation_mark: Partial | :warning: Behaves the same way as `InstanceSizeOf`
