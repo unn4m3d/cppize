@@ -1,7 +1,7 @@
 module Cppize
   class Transpiler
     register_node ArrayLiteral do
-      if node.elements.empty? && !node.of && !options[:allow_empty_arrays]?
+      if node.elements.empty? && !node.of && !tr_options[:allow_empty_arrays]?
         raise Error.new("You must specify array type of empty array literals",node,nil,@current_filename)
       end
 
