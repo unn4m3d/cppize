@@ -60,7 +60,7 @@ RespondsTo    | :x: Not supported |
 Return        | :heavy_exclamation_mark: Partial |
 SizeOf        | :heavy_exclamation_mark: Partial | :warning: Behaves the same way as `InstanceSizeOf`
 StringInterpolation | :white_check_mark: Supported |
-StringLiteral | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
+StringLiteral | :heavy_exclamation_mark: Partial | :warning: Needs to be implemented in stdlib<br> :warning: Escape sequences are not supported
 SymbolLiteral | :x: Not supported |
 TupleLiteral  | :x: Not supported |
 TypeDeclaration | :white_check_mark: Supported |
