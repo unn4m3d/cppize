@@ -177,6 +177,29 @@ module Cppize
         end
       end
 
+      protected def l2h(l : Location?, file : String? = nil)
+        file ||= "unknown>"
+        unless l.nil?
+          unless l.not_nil!.filename.nil?
+            file = l.not_nil!.filename.not_nil!
+          end
+        end
+
+        if l.nil?
+          {
+            "file" => file,
+            "line" => "unknown",
+            "column"=>"unknown"
+          }
+        else
+          {
+            "file" => file,
+            "line" => l.line_number,
+            "column"=>l.column_number
+          }
+        end
+      end
+
       def to_s(trace : Bool = false)
         str = message.to_s + "\n"
         if node_stack.size > 0
@@ -200,8 +223,8 @@ module Cppize
           nodes: node_stack.map do |x|
             {
               node_type: x.class.name,
-              node_start: l2s(x.location, @real_filename),
-              node_end: l2s(x.end_location, @real_filename),
+              node_start: l2h(x.location, @real_filename),
+              node_end: l2h(x.end_location, @real_filename),
             }
           end,
           filename: @real_filename
