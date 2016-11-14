@@ -53,7 +53,7 @@ Path          | :heavy_exclamation_mark: Partial |
 PointerOf     | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 ProcLiteral   | :white_check_mark: Supported|
 ProcNotation  | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
-RangeLiteral  | :x: Not supported |
+RangeLiteral  | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 RegexLiteral  | :x: Not supported |
 Require       | :x: Not supported |
 RespondsTo    | :x: Not supported |
