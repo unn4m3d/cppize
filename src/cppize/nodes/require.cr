@@ -1,7 +1,8 @@
 module Cppize
   class Transpiler
-    @library_path = (if options.has_key?["no-stdlib"]
-      [File.join(File.dirname(Process.executable_path),"stdlib/build")]
+    @library_path : Array(String)
+    @library_path = (if options.has_key?("no-stdlib")
+      [File.join(File.dirname(Process.executable_path || ""),"stdlib/build")]
     else
       [""]
     end) + ENV["CRYSTAL_STDLIB_PATH"].split(":")
@@ -31,9 +32,17 @@ module Cppize
       old_filename = @current_filename
       Lines.new do |l|
         l.line("// Begin #{filename} (#{path})")
-        l.line(transpile(Parser.parse(filename)))
+        begin
+          if filename.nil?
+            raise Error.new("Cannot find #{path}")
+          else
+            l.line(transpile(Parser.parse(File.read(filename.not_nil!))))
+          end
+        rescue ex
+          raise Error.new(ex.message || "Error opening #{path}",node,nil,@current_filename)
+        end
         l.line("// End #{filename} (#{path})")
-      end
+      end.to_s
       @current_filename = old_filename
     end
   end
