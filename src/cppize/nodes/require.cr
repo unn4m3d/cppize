@@ -36,6 +36,7 @@ module Cppize
           if filename.nil?
             raise Error.new("Cannot find #{path}")
           else
+            @current_filename = filename.not_nil!
             l.line(transpile(Parser.parse(File.read(filename.not_nil!))))
           end
         rescue ex

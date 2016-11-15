@@ -178,10 +178,15 @@ module Cppize
       end
 
       protected def l2h(l : Location?, file : String? = nil)
-        file ||= "unknown>"
+        file ||= "<unknown>"
         unless l.nil?
           unless l.not_nil!.filename.nil?
-            file = l.not_nil!.filename.not_nil!
+            _f = l.not_nil!.filename.not_nil!
+            if _f.is_a? VirtualFile
+              file = _f.source
+            else
+              file = _f.to_s
+            end
           end
         end
 
