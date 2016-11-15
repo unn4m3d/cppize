@@ -12,7 +12,7 @@ Block         | :white_check_mark: Supported |
 BoolLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 Break         | :white_check_mark: Supported |
 Call          | :heavy_exclamation_mark: Partial | :warning: `NamedArgument`s are not supported
-Case          | :heavy_exclamation_mark: Partial | :warning: This is **NOT** expression <br> :warning: Break inside case may cause undefined behaviour
+Case          | :heavy_exclamation_mark: Partial | :warning: This is **NOT** expression <br> :warning: Cannot compare types yet
 Cast          | :bangbang: Experimental | :memo: Implemented using `static_cast`. <br> :memo: `-funsafe-cast` command line option tells transpiler to use C-style casts
 CharLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 ClassDef      | :x: Not supported |

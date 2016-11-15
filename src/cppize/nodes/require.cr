@@ -5,7 +5,7 @@ module Cppize
       [File.join(File.dirname(Process.executable_path || ""),"stdlib/build")]
     else
       [""]
-    end) + ENV["CRYSTAL_STDLIB_PATH"].split(":")
+    end) + (ENV["CRYSTAL_STDLIB_PATH"]? || "").split(":")
 
     def add_library_path(p)
       @library_path << p

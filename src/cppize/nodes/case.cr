@@ -3,21 +3,23 @@ module Cppize
     register_node Case do
       Lines.new do |l|
         l.line nil
-        l.block("switch(#{transpile node.cond})") do
-          node.whens.each do |wh|
-            wh.conds.each do |cond|
-              l.line "case #{transpile cond}:",true
-            end
-            l.line transpile(wh.body)
-            l.line "break"
+        #l.block("switch(#{transpile node.cond})") do
+        node.whens.each_with_index do |wh,i|
+          head = (i == 0 ? "if" : "else if")
+          cond = wh.conds.reduce("") do |memo,e|
+            del = (memo.to_s.empty? ? "" : " || ")
+            memo.to_s + "#{del}((#{transpile node.cond}).compare(#{transpile e}))"
           end
-
-          if node.else
-            l.line "default:",true
-            l.line transpile node.else
-            l.line "break"
+          l.block("#{head}(#{cond})") do
+            l.line transpile wh.body
           end
         end
+        if node.else
+          l.block "else" do
+            l.line transpile node.else
+          end
+        end
+        #end
       end.to_s
     end
   end

@@ -87,5 +87,14 @@ def main : NativeInt
     next
   end
 
+  case spp
+  when "lol"
+    foo("baz")
+  when "kek"
+    bar("baz")
+  else
+    baz("biz")
+  end
+
   return 0
 end
