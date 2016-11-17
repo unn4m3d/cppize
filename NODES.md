@@ -18,7 +18,7 @@ CharLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented
 ClassDef      | :x: Not supported |
 ClassVar      | :x: Not supported |
 CStructOrUnionDef | :x: Not supported |
-Def           | :heavy_exclamation_mark: Partial | :warning: No class/instance defs as ClassDefs are not implemented<br>:warning: Splats are not supported
+Def           | :heavy_exclamation_mark: Partial | :warning: No class/instance defs as ClassDefs are not implemented<br>:warning: Splats are partially supported; see Splat for details
 EnumDef       | :heavy_exclamation_mark: Partial | :warning: Only enums without base type are supported
 Expressions   | :white_check_mark: Supported |
 ExternalVar   | :heavy_exclamation_mark: Partial | :warning:
@@ -59,6 +59,7 @@ Require       | :heavy_exclamation_mark: Partial | :warning: `*` and `**` are no
 RespondsTo    | :x: Not supported |
 Return        | :heavy_exclamation_mark: Partial |
 SizeOf        | :heavy_exclamation_mark: Partial | :warning: Behaves the same way as `InstanceSizeOf`
+Splat         | :heavy_exclamation_mark: Partial | :warning: There is no support for calls with variable number of arguments yet<br> :warning: See Splats section below
 StringInterpolation | :white_check_mark: Supported |
 StringLiteral | :heavy_exclamation_mark: Partial | :warning: Needs to be implemented in stdlib<br> :warning: Escape sequences are not supported
 SymbolLiteral | :x: Not supported |
@@ -74,3 +75,28 @@ Var           | :bangbang: Experimental |
 VisibilityModifier | :white_check_mark: Supported |
 When          | :white_check_mark: Supported
 While         | :white_check_mark: Supported |
+
+
+Splats
+--
+
+Splats are supported partially. For example:
+
+```crystal
+def a(b,*c,d)
+  #...
+end
+
+#OK
+a foo, bar, baz, biz
+
+#OK
+a foo, *bar
+
+#WRONG
+a *baz
+
+#WRONG
+a *baz,foo
+
+```
