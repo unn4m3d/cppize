@@ -8,7 +8,7 @@ __comment__ "LOL"
 
 # -*inline*-
 module MyNamespace
-  def lol(c : Char) : String
+  def lol(*c) : String
     c.to_s
   end
 
