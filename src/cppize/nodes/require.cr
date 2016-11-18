@@ -23,7 +23,6 @@ module Cppize
       path = node.string
       _f = [] of String
       if path.match(/^\.{1,2}\//)
-        # FIXME
         _f = Dir.glob(File.expand_path(path,File.dirname(@current_filename)))
       else
         _f = search_file path
