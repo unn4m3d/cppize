@@ -1,5 +1,10 @@
 language : crystal
-
+addons:
+  apt:
+    sources:
+      - llvm-toolchain-precise-3.6
+    packages:
+      - llvm-3.6-dev
 
 script:
-  - crystal build ./src/transpiler.cr -s --no-codegen
+  - crystal spec -s
