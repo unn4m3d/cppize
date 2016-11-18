@@ -51,6 +51,9 @@ module Cppize
     @in_class = false
     @current_class = ""
     @current_visibility : Visibility? = nil
+
+    getter current_filename
+
     @current_filename = "<unknown>"
     @ast : ASTNode?
 
