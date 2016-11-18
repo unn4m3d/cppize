@@ -1,11 +1,5 @@
 language : crystal
-addons:
-  apt:
-    packages:
-      llvm-3.5-dev
+
 
 script:
-  - llvm-config --version
-  - llvm-config --cxxflags
-  - g++ -o /opt/crystal/src/llvm/ext/llvm_ext.o /opt/crystal/src/llvm/ext/llvm_ext.cc $(llvm-config --cxxflags)
-  - crystal spec --stats
+  - crystal build ./src/transpiler.cr -s --no-codegen
