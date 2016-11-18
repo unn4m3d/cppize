@@ -10,7 +10,8 @@ addons:
       - llvm-3.6
       - llvm-3.6-runtime
       - libstdc++6
+      - libedit-dev
 
 script:
-  - g++ -o /opt/crystal/src/llvm/ext/llvm_ext.o -c /opt/crystal/src/llvm/ext/llvm_ext.cc $(llvm-config-3.6 --cxxflags)
+  - g++-6 -o /opt/crystal/src/llvm/ext/llvm_ext.o -c /opt/crystal/src/llvm/ext/llvm_ext.cc $(llvm-config-3.6 --cxxflags)
   - crystal spec -s
