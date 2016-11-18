@@ -24,16 +24,40 @@
       <h1 class="project-name">Cppize</h1>
       <h2 class="project-tagline">Crystal-to-C++ transpiler [WIP]</h2>
       <a href="https://github.com/unn4m3d/cppize" class="btn">View on GitHub</a>
-      <a href="transpiler.html" class="btn">Try it online</a>
       <a href="https://github.com/unn4m3d/cppize/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/unn4m3d/cppize/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
-      <div id="description">
-        <p>
-          <strong>Cppize</strong> is a <a href="https://crystal-lang.org/">Crystal</a> to C++ transpiler written in Crystal. You can try it <a href="transpiler.html"> here</a>
-        </p>
+
+      <div id="crystal-code-wrapper">
+          <textarea class="codemirror">
+# Put your crystal code here
+
+def main
+    0i32
+end
+          </textarea>
+      </div>
+      <div id="tbtn-wrapper">
+        <button>Transpile!</button>
+        <span class="transpiler-option">
+          <input type="checkbox" data-option="unsafe-cast" />
+          <code>-funsafe-cast</code>
+        </span>
+        <span class="transpiler-option">
+          <input type="checkbox" data-option="auto-module-type" />
+          <code>-fauto-module-type</code>
+        </span>
+      </div>
+
+      <div id="cpp-code-wrapper">
+      </div>
+
+      <div class="modal" id="msg-modal" style="display:none;">
+        <a href="#" class="close">×</a>
+        <div id="modal-header"></div>
+        <div id="modal-content">Loading...</div>
       </div>
 
       <footer class="site-footer">

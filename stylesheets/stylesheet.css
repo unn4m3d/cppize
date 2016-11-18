@@ -297,3 +297,7 @@ div.CodeMirror{
 pre{
   overflow : visible;
 }
+
+#description{
+  font-size: 20px;
+}
