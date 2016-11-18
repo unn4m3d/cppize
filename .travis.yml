@@ -1,4 +1,5 @@
 language : crystal
 script:
+  - llvm-config --version
   - g++ -o /opt/crystal/src/llvm/ext/llvm_ext.o /opt/crystal/src/llvm/ext/llvm_ext.cc $(llvm-config --cxxflags)
   - crystal spec --stats
