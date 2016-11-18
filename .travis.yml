@@ -2,7 +2,7 @@ language : crystal
 addons:
   apt:
     packages:
-      llvm-3.4-dev
+      llvm-3.6-dev
 
 script:
   - llvm-config --version
