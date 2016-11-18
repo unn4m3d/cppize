@@ -4,8 +4,11 @@ describe Cppize do
   # TODO: Write tests
 
   it "works" do
-    expect_raises(Cppize::Transpiler::Error) do
-      Cppize::Transpiler.new(false).parse_and_transpile("nil.is_a? Nil","test")
+    begin
+      Cppize::Transpiler.new(false).parse_and_transpile("puts 0","test")
+      true.should eq(true)
+    rescue ex
+      ex.should eq("")
     end
   end
 end
