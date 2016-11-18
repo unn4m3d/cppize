@@ -21,6 +21,7 @@ module Cppize
 
     register_node Require do
       path = node.string
+      path += ".cr" if File.extname(path).empty?
       _f = [] of String
       if path.match(/^\.{1,2}\//)
         _f = Dir.glob(File.expand_path(path,File.dirname(@current_filename)))
