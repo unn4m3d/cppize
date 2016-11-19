@@ -106,6 +106,8 @@ unless output
   end
 end
 
+transpiler.post_initialize!
+
 code += transpiler.parse_and_transpile(input_c,input)
 
 if use_stdout

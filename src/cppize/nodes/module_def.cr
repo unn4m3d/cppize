@@ -1,6 +1,20 @@
 module Cppize
   class Transpiler
+
+    @unit_types = Hash(String,Symbol).new
+
+    def search_unit_type(name : Path)
+      if name.global?
+        return @unit_types[name.names.join("::")]? || :undefined
+      end
+
+      uid = "#{@current_namespace}::#{@current_class}::#{name.names.join("::")}".gsub(/^::/,"")
+      return @unit_types[uid]? || :undefined
+
+    end
+
     register_node ModuleDef do
+      unit_id = "#{@current_namespace}::#{@current_class}::#{node.name.names.join("::")}".gsub(/^::/,"")
       includes = node.search_of_type(Include)
       ancestors = includes.size > 0 ? ": #{includes.map { |x| "public virtual " + transpile x.as(Include).name }.join(", ")}" : ""
       included? = false
@@ -10,8 +24,10 @@ module Cppize
         end)
       end
       if !node.type_vars.nil?
+        @unit_types[unit_id] = :class_module
+        @unit_stack.push({id: unit_id, type: :class_module})
         tv = node.type_vars.as(Array(String))
-        @forward_decl_classes.line "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name}"
+        #@forward_decl_classes.line "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name}"
         if includes.empty?
           @classes[get_name node.name] = ClassData.new(get_name(node.name))
         else
@@ -24,10 +40,13 @@ module Cppize
           @classes[get_name node.name].line transpile node.body
           @in_class, @current_class = old_in_class, old_class
         end
+        @unit_stack.pop
         @classes[get_name node.name].line ""
         ""
       elsif includes.size > 0 || included?
-        @forward_decl_classes.line "class #{node.name}"
+        @unit_types[unit_id] = :class_module
+        @unit_stack.push({id: unit_id, type: :class_module})
+        #@forward_decl_classes.line "class #{node.name}"
         @classes[get_name node.name] = ClassData.new(get_name(node.name), *(Tuple(String).from includes.map{|x| get_name(x).split(NAMES_DELIMITER)}.flatten))
         @classes[get_name node.name].block "class #{node.name} #{ancestors}" do
           @current_visibility = nil
@@ -36,9 +55,12 @@ module Cppize
           @classes[get_name node.name].line transpile node.body
           @in_class, @current_class = old_in_class, old_class
         end
+        @unit_stack.pop
         @classes[get_name node.name].line ""
         ""
       else
+        @unit_types[unit_id] = :namespace
+        @unit_stack.push({id: unit_id, type: :namespace})
         Lines.new(@failsafe) do |l|
           l.line nil
           l.block "namespace #{node.name.to_s.sub(/::$/,"")}" do
@@ -46,6 +68,7 @@ module Cppize
             l.line transpile node.body
             @current_namespace = old_namespace
           end
+          @unit_stack.pop
         end.to_s
       end
     end
