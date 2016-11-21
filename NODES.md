@@ -30,7 +30,7 @@ If            | :white_check_mark: Supported |
 ImplicitObj   | :x: Not supported |
 Include       | :bangbang: Experimental |
 InstanceSizeOf| :white_check_mark: Supported |
-InstanceVar   | :white_check_mark: Supported
+InstanceVar   | :white_check_mark: Supported |
 IsA           | :x: Not supported |
 LibDef        | :heavy_exclamation_mark: Partial |
 Macro         | :x: Not supported |
@@ -74,7 +74,7 @@ Union         | :bangbang: Experimental | :warning: Needs to be implemented in s
 Unless        | :white_check_mark: Supported |
 Var           | :bangbang: Experimental |
 VisibilityModifier | :white_check_mark: Supported |
-When          | :white_check_mark: Supported
+When          | :white_check_mark: Supported |
 While         | :white_check_mark: Supported |
 
 
