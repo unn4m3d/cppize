@@ -10,7 +10,9 @@ module Cppize
             if arg.responds_to? :value
               l.line "#define #{arg.value.to_s}", true
             else
-              _self.warning "Only literals should be passed to define",call,nil,_self.current_filename
+              _self.warning Warning::ARGUMENT_MISMATCH do
+                _self.warn "Only literals should be passed to define",call,nil,_self.current_filename
+              end
               l.line "#define #{arg.to_s}", true
             end
           end
@@ -20,7 +22,9 @@ module Cppize
           if arg.responds_to? :value
             _self.defines.push arg.value.to_s
           else
-            _self.warning "Only literals should be passed to define",call,nil,_self.current_filename
+            _self.warning Warning::ARGUMENT_MISMATCH do
+              _self.warn "Only literals should be passed to define",call,nil,_self.current_filename
+            end
             _self.defines.push arg.to_s
           end
         end
@@ -35,7 +39,9 @@ module Cppize
             if arg.responds_to? :value
               l.line "#undef #{arg.value.to_s}", true
             else
-              _self.warning "Only literals should be passed to undef",call,nil,_self.current_filename
+              _self.warning Warning::ARGUMENT_MISMATCH do
+                _self.warn "Only literals should be passed to undef",call,nil,_self.current_filename
+              end
               l.line "#undef #{arg.to_s}", true
             end
           end
@@ -45,7 +51,9 @@ module Cppize
           if arg.responds_to? :value
             _self.defines.delete arg.value.to_s
           else
-            _self.warning "Only literals should be passed to undef",call,nil,_self.current_filename
+            _self.warning Warning::ARGUMENT_MISMATCH do
+              _self.warn "Only literals should be passed to undef",call,nil,_self.current_filename
+            end
             _self.defines.delete arg.to_s
           end
         end

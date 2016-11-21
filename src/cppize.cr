@@ -15,12 +15,43 @@ end
 module Cppize
   include Crystal
 
+  @[Flags]
+  enum Warning : UInt64
+    REDECLARATION
+    FD_SKIP
+    KIND_INF
+    NAME_MISMATCH
+    LONG_PATH
+    NESTED
+    ARGUMENT_MISMATCH
+  end
+
+  def self.warning_list
+    Warning.names.map(&.downcase.gsub("_","-"))
+  end
+
+  def self.warning_from_string(str)
+    i = warning_list.index str
+    if i.nil?
+      return 0
+    else
+      return 2u64**i
+    end
+
+  end
+
   class Transpiler
     property options
 
     STDLIB_NAMESPACE = "Crystal::"
 
     @@features = Hash(String,Proc(String,Void)).new
+
+    property enabled_warnings
+
+    @enabled_warnings : UInt64
+
+    @enabled_warnings = 0u64
 
     macro register_node(klass,&block)
       protected def transpile(node : {{klass}}, *tr_options)
@@ -192,12 +223,18 @@ module Cppize
       @on_error = o
     end
 
-    def warning(w : Error)
+    def warn(w : Error)
       @on_warning.call(w)
     end
 
-    def warning(m : String, n : ASTNode?=nil, c : Error?=nil, f : String = @current_filename)
-      warning(Error.new m,n,c,f)
+    def warn(m : String, n : ASTNode?=nil, c : Error?=nil, f : String = @current_filename)
+      warn(Error.new m,n,c,f)
+    end
+
+    def warning(w,&b)
+      if (@enabled_warnings.to_u64 & w.to_u64) != 0
+        b.call
+      end
     end
 
     protected def pretty_signature(d : Def) : String

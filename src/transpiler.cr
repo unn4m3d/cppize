@@ -55,6 +55,16 @@ OptionParser.parse! do |opts|
     do_not_colorize = true
   end
 
+  opts.on("-WWARNING","--warning WARNING","Enable warnings of given type") do |w|
+    if w.strip == "all"
+      transpiler.enabled_warnings = 0xFFFFFFFFFFFFFFFF
+    elsif w.strip == "none"
+      transpiler.enabled_warnings = 0u64
+    else
+      transpiler.enabled_warnings |= Cppize.warning_from_string w.strip.downcase
+    end
+  end
+
   opts.on("-V","--verbose","Run verbosely") do
     verbose = true
   end
