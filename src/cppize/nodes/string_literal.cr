@@ -5,7 +5,11 @@ module Cppize
     end
 
     register_node StringLiteral do
-      (should_return? ? "return " : "") + "\"#{escape_cpp_string node.value}\"_crstr"
+      if tr_options.includes? :regex
+        (should_return? ? "return " : "") + "\"#{escape_regex node.value}\"_crstr"
+      else
+        (should_return? ? "return " : "") + "\"#{escape_cpp_string node.value}\"_crstr"
+      end
     end
   end
 end

@@ -2,9 +2,11 @@ module Cppize
   class Transpiler
     register_node Return do
       if node.exp
-        transpile node.exp, :should_return
+        code = transpile node.exp, :should_return
+        code += ";" unless code.ends_with?(";")
+        code
       else
-        "return"
+        "return;"
       end
     end
   end

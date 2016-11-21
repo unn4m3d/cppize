@@ -20,7 +20,7 @@ module Cppize
 
     register_node Call do
       if should_return?
-        "return #{transpile node}"
+        "return #{transpile node};"
       else
         args = node.args.map { |x| transpile x }.join(", ")
 
