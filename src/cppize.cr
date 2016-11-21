@@ -35,6 +35,10 @@ module Cppize
       end
     end
 
+    def tr_uid(s)
+      s.gsub(/^::/,"").gsub(/::::/,"::").gsub(/<.*>/,"")
+    end
+
     def register_feature(feature : String, &on_enable : Proc(String,Void))
       @@features[feature] = on_enable
     end

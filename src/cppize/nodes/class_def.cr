@@ -1,7 +1,7 @@
 module Cppize
   class Transpiler
     register_node ClassDef do
-      unit_id = "#{@current_namespace}::#{@current_class}::#{transpile node.name}".gsub(/^::/,"")
+      unit_id = tr_uid "#{@current_namespace}::#{@current_class}::#{transpile node.name}"
       @unit_types[unit_id] = :class
       typenames = node.type_vars || [] of String
 
@@ -12,13 +12,13 @@ module Cppize
       if node.name.names.size == 1
         if @in_class
           warning "Forward declaration of class #{unit_id} is inside another class. This may cause severe issues",node,nil,@current_filename
-          @classes["#{@current_namespace}::#{@current_class}"].line "class #{translate_name node.name.names.first}"
+          @classes[tr_uid "#{@current_namespace}::#{@current_class}"].line "class #{translate_name node.name.names.first}"
         else
           @forward_decl_classes.line "class #{translate_name node.name.names.first}"
         end
       else
         warning "Declaring a class with path containing more than 1 name. Ask developer to rewrite it using nested classes and modules",node,nil,@current_filename
-        target_id = "#{@current_namespace}::#{@current_class}::#{node.name.names[1..-1].join("::")}".gsub(/^::/,"")
+        target_id = tr_uid "#{@current_namespace}::#{@current_class}::#{node.name.names[1..-1].join("::")}"
         target_type = search_unit_type target_id
         case target_type
         when :namespace

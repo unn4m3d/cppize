@@ -3,9 +3,12 @@ module Cppize
     register_node TypeDeclaration do
       @scopes << Scope.new if @scopes.size < 1
       case node.var
-      when Var
+      when Var || InstanceVar || ClassVar
         @scopes.first[node.var.as(Var).name] = {symbol_type: :object, value: node.var}
-        next "#{transpile node.declared_type} #{translate_name node.var.as(Var).name}"
+        v = node.var
+        if v.responds_to? :name
+          next "#{transpile node.declared_type} #{translate_name v.name.to_s}"
+        end
       when Global
         @scopes.last[node.var.as(Global).name] = {symbol_type: :object, value: node.var}
         unless @globals_list.includes? node.var.as(Global).name
