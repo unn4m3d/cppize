@@ -72,6 +72,8 @@ module Cppize
 
           global_signature = "#{global_template}#{modifiers}#{def_type} #{namesp}#{@current_class}::#{common_signature}"
 
+          @unit_stack << {id: global_signature, type: :class_def}
+
           @defs.block global_signature do
             if def_type == "void"
               @defs.line transpile(node.body)
@@ -80,9 +82,10 @@ module Cppize
             end
           end
 
+          @unit_stack.pop
+
         else
           #global_signature = "#{global_template} #{modifiers} #{def_type} #{namesp}#{common_signature}"
-
           if namesp.empty?
             @forward_decl_defs.line local_signature
           else

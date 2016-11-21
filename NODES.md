@@ -16,9 +16,9 @@ Case          | :heavy_exclamation_mark: Partial | :warning: This is **NOT** exp
 Cast          | :bangbang: Experimental | :memo: Implemented using `static_cast`. <br> :memo: `-funsafe-cast` command line option tells transpiler to use C-style casts
 CharLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 ClassDef      | :heavy_exclamation_mark: Partial | :warning: Variadic templates are not supported<br> :warning: Named Type Vars are not supported
-ClassVar      | :x: Not supported |
+ClassVar      | :white_check_mark: Supported |
 CStructOrUnionDef | :x: Not supported |
-Def           | :heavy_exclamation_mark: Partial | :warning: No class/instance defs as ClassDefs are not implemented<br>:warning: Splats are partially supported; see Splat for details
+Def           | :heavy_exclamation_mark: Partial | :warning: Splats are partially supported; see Splat for details
 EnumDef       | :heavy_exclamation_mark: Partial | :warning: Only enums without base type are supported
 Expressions   | :white_check_mark: Supported |
 ExternalVar   | :heavy_exclamation_mark: Partial | :warning:
@@ -30,6 +30,7 @@ If            | :white_check_mark: Supported |
 ImplicitObj   | :x: Not supported |
 Include       | :bangbang: Experimental |
 InstanceSizeOf| :white_check_mark: Supported |
+InstanceVar   | :white_check_mark: Supported
 IsA           | :x: Not supported |
 LibDef        | :heavy_exclamation_mark: Partial |
 Macro         | :x: Not supported |
