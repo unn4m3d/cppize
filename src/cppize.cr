@@ -122,11 +122,15 @@ module Cppize
       lines.join("\n")
     end
 
+    @includes = Array(Include?).new
 
     def parse_and_transpile(code : String, file : String = "<unknown>")
       begin
         @current_filename = file
         @ast = Parser.parse(code)
+        unless @ast.nil?
+          @includes = @ast.not_nil!.search_of_type(Include,true).map{|x| x.as(Include?)}
+        end
         code = transpile @ast
         # predef = Lines.new(@failsafe) do |l|
         # end.to_s

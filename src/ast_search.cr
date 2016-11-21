@@ -1,4 +1,5 @@
 abstract class Crystal::ASTNode
+
   def children
     if self.responds_to?(:expressions)
       self.expressions

@@ -22,7 +22,7 @@ module Cppize
       ancestors = includes.size > 0 ? ": #{includes.map { |x| "public virtual " + transpile x.as(Include).name }.join(", ")}" : ""
       included? = false
       if options.has_key? "auto-module-type"
-        included? = (@ast.not_nil!.search_of_type(Include,true).count do |x|
+        included? = (@includes.count do |x|
           x.as(Include).name.to_s.sub(/^::/,"") == (@current_namespace.empty? ? "" : @current_namespace + "::") + node.name.to_s
         end)
       end

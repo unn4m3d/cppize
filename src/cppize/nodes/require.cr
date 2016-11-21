@@ -41,11 +41,13 @@ module Cppize
             raise Error.new("Cannot find #{path}")
           else
             filename.each do |f|
+              ast = Parser.parse(File.read(f))
+              @includes += ast.search_of_type(Include,true).map{|x| x.as(Include?)}
               unless @required.includes? File.expand_path f
                 @required << File.expand_path f
                 l.line("// BEGIN #{f} (#{path})")
                 @current_filename = f
-                l.line(transpile(Parser.parse(File.read(f))))
+                l.line(transpile(ast))
                 l.line("// END #{f}")
               end
             end
