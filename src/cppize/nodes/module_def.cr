@@ -3,6 +3,10 @@ module Cppize
 
     @unit_types = Hash(String,Symbol).new
 
+    def search_unit_type(name : String)
+      return @unit_types[name]? || :undefined
+    end
+
     def search_unit_type(name : Path)
       if name.global?
         return @unit_types[name.names.join("::")]? || :undefined
@@ -10,7 +14,6 @@ module Cppize
 
       uid = "#{@current_namespace}::#{@current_class}::#{name.names.join("::")}".gsub(/^::/,"")
       return @unit_types[uid]? || :undefined
-
     end
 
     register_node ModuleDef do
@@ -28,35 +31,35 @@ module Cppize
         @unit_stack.push({id: unit_id, type: :class_module})
         tv = node.type_vars.as(Array(String))
         #@forward_decl_classes.line "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name}"
-        if includes.empty?
-          @classes[get_name node.name] = ClassData.new(get_name(node.name))
-        else
-          @classes[get_name node.name] = ClassData.new(get_name(node.name), *(Tuple(String).from includes.map{|x| get_name(x).split(NAMES_DELIMITER)}.flatten))
+
+        unless @classes[get_name node.name]
+          if includes.empty?
+            @classes[get_name node.name] = ClassData.new(get_name(node.name))
+          else
+            @classes[get_name node.name] = ClassData.new(get_name(node.name), *(Tuple(String).from includes.map{|x| get_name(x).split(NAMES_DELIMITER)}.flatten))
+          end
+          @classes[get_name node.name].header= "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name} #{ancestors}"
         end
-        @classes[get_name node.name].block "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name} #{ancestors}" do
-          @current_visibility = nil
-          old_class, @current_class = @current_class, @current_class + "::" + node.name.to_s + "<#{tv.join(", ")}>"
-          old_in_class, @in_class = @in_class, true
-          @classes[get_name node.name].line transpile node.body
-          @in_class, @current_class = old_in_class, old_class
-        end
+        @current_visibility = nil
+        old_class, @current_class = @current_class, @current_class + "::" + node.name.to_s + "<#{tv.join(", ")}>"
+        old_in_class, @in_class = @in_class, true
+        @classes[get_name node.name].line transpile node.body
+        @in_class, @current_class = old_in_class, old_class
         @unit_stack.pop
-        @classes[get_name node.name].line ""
         ""
       elsif includes.size > 0 || included?
         @unit_types[unit_id] = :class_module
         @unit_stack.push({id: unit_id, type: :class_module})
-        #@forward_decl_classes.line "class #{node.name}"
-        @classes[get_name node.name] = ClassData.new(get_name(node.name), *(Tuple(String).from includes.map{|x| get_name(x).split(NAMES_DELIMITER)}.flatten))
-        @classes[get_name node.name].block "class #{node.name} #{ancestors}" do
-          @current_visibility = nil
-          old_class, @current_class = @current_class, @current_class + "::" + node.name.to_s
-          old_in_class, @in_class = @in_class, true
-          @classes[get_name node.name].line transpile node.body
-          @in_class, @current_class = old_in_class, old_class
+        unless @classes[get_name node.name]
+          @classes[get_name node.name] = ClassData.new(get_name(node.name), *(Tuple(String).from includes.map{|x| get_name(x).split(NAMES_DELIMITER)}.flatten))
+          @classes[get_name node.name].header= "class #{node.name} #{ancestors}"
         end
+        @current_visibility = nil
+        old_class, @current_class = @current_class, @current_class + "::" + node.name.to_s
+        old_in_class, @in_class = @in_class, true
+        @classes[get_name node.name].line transpile node.body
+        @in_class, @current_class = old_in_class, old_class
         @unit_stack.pop
-        @classes[get_name node.name].line ""
         ""
       else
         @unit_types[unit_id] = :namespace

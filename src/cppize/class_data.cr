@@ -4,7 +4,9 @@ module Cppize
     property lines : Lines
     property name : String
     property dep_source : ClassDataHash?
+    property header : String
     @lines = Lines.new
+    @header = ""
 
     def initialize(@name)
       @dependencies = [] of String
@@ -37,6 +39,15 @@ module Cppize
 
     def block(a=nil,&b)
       lines.block(a,&b)
+    end
+
+    def to_s
+      Lines.new do |l|
+        l.line nil
+        l.block @header do
+          l.line lines.to_s
+        end
+      end.to_s + ";"
     end
   end
 
