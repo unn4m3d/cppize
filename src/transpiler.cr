@@ -11,7 +11,8 @@ do_not_colorize = false
 verbose = false
 
 OptionParser.parse! do |opts|
-  opts.banner = "Cppize v#{Cppize::VERSION}"
+  opts.banner = "Cppize v#{Cppize::VERSION}\n\nAvailable features :\n\t#{Cppize::Transpiler.features_list.map{|x| "-f#{x}"}.join("\n\t")} " +
+    "\n\nAvailable warning types :\n\t#{Cppize.warning_list.map{|x| "-W#{x}"}.join("\n\t")}"
 
   opts.on("-v", "--version", "Prints version and exits") do
     puts "#{Cppize::VERSION}"

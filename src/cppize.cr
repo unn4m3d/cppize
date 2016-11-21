@@ -47,6 +47,10 @@ module Cppize
 
     @@features = Hash(String,Proc(String,Void)).new
 
+    def self.features_list
+      @@features.keys
+    end
+
     property enabled_warnings
 
     @enabled_warnings : UInt64
