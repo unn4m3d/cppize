@@ -19,7 +19,7 @@ module Cppize
     register_node ModuleDef do
       unit_id = "#{@current_namespace}::#{@current_class}::#{node.name.names.join("::")}".gsub(/^::/,"")
       includes = node.search_of_type(Include)
-      ancestors = includes.size > 0 ? ": #{includes.map { |x| "public virtual " + transpile x.as(Include).name }.join(", ")}" : ""
+      ancestors = includes.size > 0 ? ": #{includes.map { |x| "public virtual " + transpile x.as(Include).name }.join(", ")}" : " : public virtual #{STDLIB_NAMESPACE}Module"
       included? = false
       if options.has_key? "auto-module-type"
         included? = (@includes.count do |x|

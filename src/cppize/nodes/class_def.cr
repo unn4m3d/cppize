@@ -5,6 +5,10 @@ module Cppize
       @unit_types[unit_id] = :class
       typenames = node.type_vars || [] of String
 
+      ancestor = (node.superclass ? transpile node.superclass : "#{STDLIB_NAMESPACE}Object")
+      ancestor = "public #{ancestor}"
+      includes = node.search_of_type(Include).map{|x| "public virtual #{transpile x}"}
+
       if node.name.names.size == 1
         if @in_class
           warning "Forward declaration of class #{unit_id} is inside another class. This may cause severe issues",node,nil,@current_filename
@@ -41,12 +45,14 @@ module Cppize
         ""
       end
 
+      inherits = ([ancestor]+includes).join(", ")
+
       @classes[unit_id] ||= ClassData.new unit_id
       if @classes[unit_id].header.empty?
         if typenames.empty?
-          @classes[unit_id].header = "class #{unit_id}"
+          @classes[unit_id].header = "class #{unit_id} : #{inherits}"
         else
-          @classes[unit_id].header = "template< #{typenames.map{|x| "typename #{x}"}.join(", ")} > class #{unit_id}"
+          @classes[unit_id].header = "template< #{typenames.map{|x| "typename #{x}"}.join(", ")} > class #{unit_id} : #{inherits}"
         end
       end
 
