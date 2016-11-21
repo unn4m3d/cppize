@@ -48,12 +48,14 @@ module Cppize
       inherits = ([ancestor]+includes).join(", ")
 
       @classes[unit_id] ||= ClassData.new unit_id
-      if @classes[unit_id].header.empty?
+      if @classes[unit_id].header.strip.empty?
         if typenames.empty?
           @classes[unit_id].header = "class #{unit_id} : #{inherits}"
         else
           @classes[unit_id].header = "template< #{typenames.map{|x| "typename #{x}"}.join(", ")} > class #{unit_id} : #{inherits}"
         end
+      else
+        warning "Class #{get_name node.name} is already declared"
       end
 
       @unit_stack << {id: unit_id, type: :class}

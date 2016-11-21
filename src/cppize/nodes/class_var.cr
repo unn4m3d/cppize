@@ -4,7 +4,7 @@ module Cppize
       if @unit_stack.last[:type] == :class_def
       (should_return? ? "return " : "") + node.name
       else
-        "static #{node.name}"
+        "static #{translate_name node.name}"
       end
     end
   end

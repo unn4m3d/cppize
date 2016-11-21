@@ -4,9 +4,9 @@ module Cppize
       @scopes << Scope.new if @scopes.size < 1
       case node.var
       when Var || InstanceVar || ClassVar
-        @scopes.first[node.var.as(Var).name] = {symbol_type: :object, value: node.var}
         v = node.var
         if v.responds_to? :name
+          @scopes.first[v.name.to_s] = {symbol_type: :object, value: node.var}
           next "#{transpile node.declared_type} #{translate_name v.name.to_s}"
         end
       when Global

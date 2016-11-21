@@ -253,7 +253,8 @@ module Cppize
     protected def translate_name(name : String)
       name.sub(/^(.*)=$/) { |m| "set_#{m}" }
           .sub(/^(.*)\?$/) { |m| "is_#{m}" }
-          .sub(/^(.*)!$/) { |m| "#{m}_" }.gsub(/[!\?=]/, "")
+          .sub(/^(.*)!$/) { |m| "#{m}_" }
+          .gsub(/[!\?=@]/, "")
     end
 
     protected def try_tr(node : ASTNode | Visibility, &block : Proc(String))

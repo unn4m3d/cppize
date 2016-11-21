@@ -54,7 +54,7 @@ module Cppize
   class ClassDataHash < Hash(String,ClassData)
     def to_s
       keys = self.keys.sort{|x,y| x <=> y}
-      keys.map{|x| self[x].lines.to_s}.join("\n\n")
+      keys.map{|x| self[x].to_s}.join("\n\n")
     end
 
     def []=(k,v : ClassData)
