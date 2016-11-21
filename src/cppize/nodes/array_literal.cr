@@ -7,7 +7,7 @@ module Cppize
 
       arr_type = (node.of ? transpile node.of : "decltype(#{transpile node.elements.first})")
 
-      (should_return? ? "return " : "") + "#{STDLIB_NAMESPACE}::Array< #{arr_type} >{ #{node.elements.map{|x| transpile x}.join(", ")} }"
+      (should_return? ? "return " : "") + "#{STDLIB_NAMESPACE}Array< #{arr_type} >{ #{node.elements.map{|x| transpile x}.join(", ")} }"
     end
   end
 end

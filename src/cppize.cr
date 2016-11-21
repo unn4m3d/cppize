@@ -18,7 +18,7 @@ module Cppize
   class Transpiler
     property options
 
-    STDLIB_NAMESPACE = "Crystal"
+    STDLIB_NAMESPACE = "Crystal::"
 
     @@features = Hash(String,Proc(String,Void)).new
 
@@ -211,7 +211,7 @@ module Cppize
 
     protected def transpile_type(_n : String)
       if CORE_TYPES.includes?(_n)
-        "#{STDLIB_NAMESPACE}::#{_n}"
+        "#{STDLIB_NAMESPACE}#{_n}"
       elsif BUILTIN_TYPES.includes?(_n)
         _n.downcase
       else
@@ -220,7 +220,7 @@ module Cppize
     end
 
     register_node Union do
-      "#{STDLIB_NAMESPACE}::Union< #{node.types.map{|x| transpile x}.join(", ")} >"
+      "#{STDLIB_NAMESPACE}Union< #{node.types.map{|x| transpile x}.join(", ")} >"
     end
 
     register_node TypeNode do

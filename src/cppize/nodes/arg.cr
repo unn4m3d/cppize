@@ -12,7 +12,7 @@ module Cppize
         unless def_v.empty?
           warning "Default values of splats are not supported",node,nil,@current_filename
         end
-        "#{STDLIB_NAMESPACE}::Tuple< #{restr} > #{translate_name node.name}"
+        "#{STDLIB_NAMESPACE}Tuple< #{restr} > #{translate_name node.name}"
       else
         "#{restr} #{translate_name node.name}#{def_v}"
       end
