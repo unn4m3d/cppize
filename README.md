@@ -52,8 +52,6 @@ transpiled_code = transpiler.parse_and_transpile_file("def foo; bar(true) end","
 
 See [src/cppize/nodes/expressions.cr](src/cppize/nodes/expressions.cr) for example
 
-**Use register_node macro with caution! See [this issue](https://github.com/crystal-lang/crystal/issues/3523)**
-
 #### Adding transpile-time macros
 
 See [src/cppize/macros/\_\_cpp\_\_.cr](src/cppize/macros/__cpp__.cr) for example
