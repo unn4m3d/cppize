@@ -6,9 +6,5 @@ module Cppize
       end
       ""
     end
-
-    #register_node String do # TODO : remove this
-    #  node
-    #end
   end
 end

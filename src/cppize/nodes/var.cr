@@ -2,7 +2,7 @@ module Cppize
   class Transpiler
     register_node Var do
       found = find_var node.name
-      result = ""
+      result = (@unit_stack.last[:type] != :class_def && node.name.match(/[^A-Za-z]+[A-Z]/) ? "const " : "")
       case found[:symbol_type]
       when :undefined
         result = "auto "

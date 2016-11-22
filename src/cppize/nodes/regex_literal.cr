@@ -5,7 +5,7 @@ module Cppize
     end
 
     register_node RegexLiteral do
-      (should_return? ? "return " : "") + "#{STDLIB_NAMESPACE}Regex(#{transpile node.value, :rege},\"#{node.options}\")"
+      (should_return? ? "return " : "") + "#{STDLIB_NAMESPACE}Regex(#{transpile node.value, :regex},\"#{node.options}\")"
     end
   end
 end

@@ -1,9 +1,15 @@
 module Cppize
   class Transpiler
     register_node ClassDef do
-      unit_id = tr_uid "#{@current_namespace}::#{@current_class}::#{transpile node.name}"
+      raw_uid = "#{@current_namespace}::#{@current_class}::#{transpile node.name}".gsub("::::","::").gsub(/^::/,"")
+      #puts raw_uid
+      unit_id = tr_uid raw_uid
       @unit_types[unit_id] = :class
-      typenames = node.type_vars || [] of String
+      typenames = [] of String
+
+      unless node.type_vars.nil?
+        typenames += node.type_vars.not_nil!
+      end
 
       ancestor = (node.superclass ? transpile node.superclass : "#{STDLIB_NAMESPACE}Object")
       ancestor = "public #{ancestor}"
@@ -48,10 +54,12 @@ module Cppize
         end
       end
 
-      unit_id.gsub(/<([a-zA-Z0-9_,]+)>/) do |m|
-        typenames += m.split(",")
-        ""
+      #puts raw_uid
+      raw_uid.gsub(/<([A-Za-z0-9_,\s]+)>/) do |_,d|
+        typenames += d[1].split(",")
       end
+
+      #puts typenames
 
       inherits = ([ancestor]+includes).join(", ")
 
@@ -60,7 +68,7 @@ module Cppize
         if typenames.empty?
           @classes[unit_id].header = "class #{unit_id} : #{inherits}"
         else
-          @classes[unit_id].header = "template< #{typenames.map{|x| "typename #{x}"}.join(", ")} > class #{unit_id} : #{inherits}"
+          @classes[unit_id].header = "template< #{typenames.map{|x| "typename #{x}"}.join(", ")} > class #{raw_uid} : #{inherits}"
         end
       else
         warning Warning::REDECLARATION do
