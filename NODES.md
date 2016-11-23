@@ -5,6 +5,7 @@ Node          | Status        | Notes
 --------------|---------------|--------------
 And           | :white_check_mark: Supported |
 Arg           | :heavy_exclamation_mark: Partial |
+Alias         | :heavy_exclamation_mark: Partial | :warning: Specialized aliases are not supported yet
 ArrayLiteral  | :heavy_exclamation_mark: Partial | :warning: Empty array literals without type restrictions are not supported<br> :warning: Needs to be implemented in stdlib
 Assign        | :white_check_mark: Supported |
 BinaryOp      | :white_check_mark: Supported |
