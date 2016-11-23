@@ -39,7 +39,7 @@ module Cppize
 
         def_type = (node.return_type ? transpile node.return_type : "auto")
 
-        modifiers = (node.receiver.to_s == "self" ? "static " : "")
+        modifiers = (node.receiver.is_a?(Self) ? "static " : "")
 
         common_signature = "#{translate_name node.name}(#{args})"
         local_template = (typenames.size > 0 ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
@@ -55,12 +55,19 @@ module Cppize
 
         global_template = ((typenames.size > 0 || @template_defs.includes? template_name) ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
 
+
         if @in_class
           if @current_visibility != node.visibility
             l.line "public:", true
             @current_visibility = node.visibility
           end
           l.line local_signature
+
+          if @unit_stack.last[:type] == :class_module && options.has_key? "implicit-static"
+            _d = node.clone
+            _d.receiver = Self.new
+            l.line transpile _d
+          end
 
           global_signature = "#{global_template}#{modifiers}#{def_type} #{full_cid}::#{common_signature}"
 

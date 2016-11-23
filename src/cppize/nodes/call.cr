@@ -49,8 +49,12 @@ module Cppize
             name = ADDITIONAL_OPERATORS.has_key?(node.name) ? ADDITIONAL_OPERATORS[node.name] : translate_name node.name
             if node.obj.is_a? Self
               "this->#{name}(#{args})"
-            elsif node.obj.is_a? Path && search_unit_type(node.obj.as(Path)) == :class_module
-              "(#{transpile node.obj}.__static_#{translate_name name}(#{args}))"
+            elsif node.obj.is_a? Path
+              if search_unit_type(node.obj.as(Path)) == :class_module && options.has_key? "implicit-static"
+                "(#{transpile node.obj}::__static_#{translate_name name}(#{args}))"
+              else
+                "(#{transpile node.obj}::#{translate_name name}(#{args}))"
+              end
             else
               "(#{transpile node.obj}.#{translate_name name}(#{args}))"
             end
