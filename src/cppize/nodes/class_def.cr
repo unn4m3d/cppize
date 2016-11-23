@@ -1,7 +1,7 @@
 module Cppize
   class Transpiler
     register_node ClassDef do
-      raw_uid = "#{@current_namespace}::#{@current_class}::#{transpile node.name}".gsub("::::","::").gsub(/^::/,"")
+      raw_uid = ([full_cid] + node.name.names).join("::")
       #puts raw_uid
       unit_id = tr_uid raw_uid
       @unit_types[unit_id] = :class
@@ -13,14 +13,14 @@ module Cppize
 
       ancestor = (node.superclass ? transpile node.superclass : "#{STDLIB_NAMESPACE}Object")
       ancestor = "public #{ancestor}"
-      includes = node.search_of_type(Include).map{|x| "public virtual #{transpile x}"}
+      includes = node.search_of_type(Include).map{|x| "public virtual #{transpile x.as(Include).name}"}
 
       if node.name.names.size == 1
         if @in_class
           warning Warning::NESTED do
             warn "Forward declaration of class #{unit_id} is inside another class. This may cause severe issues",node,nil,@current_filename
           end
-          @classes[tr_uid "#{@current_namespace}::#{@current_class}"].line "class #{translate_name node.name.names.first}"
+          @classes[tr_uid "#{(@current_namespace+@current_class).join("::")}"].line "class #{translate_name node.name.names.first}"
         else
           @forward_decl_classes.line "class #{translate_name node.name.names.first}"
         end
@@ -28,12 +28,18 @@ module Cppize
         warning Warning::LONG_PATH do
           warn "Declaring a class with path containing more than 1 name. Ask developer to rewrite it using nested classes and modules",node,nil,@current_filename
         end
-        target_id = tr_uid "#{@current_namespace}::#{@current_class}::#{node.name.names[1..-1].join("::")}"
+        target_id = tr_uid (@current_namespace+@current_class+node.name.names[1..-1]).join("::")
         target_type = search_unit_type target_id
         case target_type
         when :namespace
-          @forward_decl_classes.block "namespace #{node.name.names[1..-1].join("::")}" do
-            @forward_decl_classes.line "class #{translate_name node.name.names.last}"
+          if node.name.global?
+            @forward_decl_classes.block "namespace #{node.name.names[1..-1].join("::")}" do
+              @forward_decl_classes.line "class #{translate_name node.name.names.last}"
+            end
+          else
+            @forward_decl_classes.block "namespace #{target_id}" do
+              @forward_decl_classes.line "class #{translate_name node.name.names.last}"
+            end
           end
         when :class || :class_module
           if @classes.has_key? target_id
@@ -55,9 +61,7 @@ module Cppize
       end
 
       #puts raw_uid
-      raw_uid.gsub(/<([A-Za-z0-9_,\s]+)>/) do |_,d|
-        typenames += d[1].split(",")
-      end
+      typenames += @typenames.flatten
 
       #puts typenames
 
@@ -78,10 +82,15 @@ module Cppize
 
       @unit_stack << {id: unit_id, type: :class}
       old_in_class,@in_class = @in_class, true
-      old_class, @current_class = @current_class, [@current_class,unit_id].join("::").gsub(/^::/,"")
+      @current_class += node.name.names
+      (node.name.names.size-1).times{@typenames << [] of String}
+      @typenames << typenames
       @classes[unit_id].line transpile node.body
       @in_class = old_in_class
-      @current_class = old_class
+      node.name.names.size.times do
+        @current_class.pop
+        @typenames.pop
+      end
       @unit_stack.pop
       ""
     end

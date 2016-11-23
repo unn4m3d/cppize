@@ -45,23 +45,15 @@ module Cppize
         local_template = (typenames.size > 0 ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
         local_signature = "#{local_template}#{modifiers}#{def_type} #{common_signature}"
 
-        template_name = "#{@current_namespace}::#{@current_class}::#{node.name}"
+        template_name = "#{full_cid}::#{node.name}"
 
         unless node.args.all? &.restriction
           @template_defs << template_name unless @template_defs.includes? template_name
         end
 
-        @current_namespace.gsub(/\<.+\>/) do |m|
-            typenames += m.sub(/^\</, "").sub(/\>$/, "").split(",").map &.strip
-        end
-
-        @current_class.gsub(/\<.+\>/) do |m|
-            typenames += m.sub(/^\</, "").sub(/\>$/, "").split(",").map &.strip
-        end
+        typenames += @typenames.flatten
 
         global_template = ((typenames.size > 0 || @template_defs.includes? template_name) ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
-
-        namesp = (@current_namespace.empty? ? "" : @current_namespace + "::")
 
         if @in_class
           if @current_visibility != node.visibility
@@ -70,7 +62,7 @@ module Cppize
           end
           l.line local_signature
 
-          global_signature = "#{global_template}#{modifiers}#{def_type} #{namesp}#{@current_class}::#{common_signature}"
+          global_signature = "#{global_template}#{modifiers}#{def_type} #{full_cid}::#{common_signature}"
 
           @unit_stack << {id: global_signature, type: :class_def}
 
@@ -86,10 +78,10 @@ module Cppize
 
         else
           #global_signature = "#{global_template} #{modifiers} #{def_type} #{namesp}#{common_signature}"
-          if namesp.empty?
+          if @current_namespace.empty?
             @forward_decl_defs.line local_signature
           else
-            @forward_decl_defs.block "namespace #{namesp}" do
+            @forward_decl_defs.block "namespace #{@current_namespace.join("::")}" do
               @forward_decl_defs.line local_signature
             end
           end
@@ -129,36 +121,29 @@ module Cppize
       end
       args_str = args.join(", ")
 
-      namesp = (@current_namespace.empty? ? "" : @current_namespace + "::")
       def_type = (d.return_type ? transpile d.return_type : "auto")
 
       modifiers = (d.receiver.to_s == "self" ? "static " : "")
       local_template = (typenames.size > 0 ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
 
-      @current_namespace.gsub(/\<.+\>/) do |m|
-          typenames += m.sub(/^\</, "").sub(/\>$/, "").split(",").map &.strip
-      end
-
-      @current_class.gsub(/\<.+\>/) do |m|
-          typenames += m.sub(/^\</, "").sub(/\>$/, "").split(",").map &.strip
-      end
-      template_name = "#{@current_namespace}::#{@current_class}::#{d.name}"
+      typenames += @typenames.flatten
+      template_name = "#{full_cid}::#{d.name}"
 
       global_template = ((typenames.size > 0 || @template_defs.includes? template_name) ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
 
       local_signature = "#{local_template}#{modifiers}#{def_type} #{translate_name d.name}(#{args_str})"
       if @in_class
-        global_signature = "#{global_template}#{modifiers}#{def_type} #{namesp}#{@current_class}::#{translate_name d.name}(#{args_str})"
+        global_signature = "#{global_template}#{modifiers}#{def_type} #{full_cid}::#{translate_name d.name}(#{args_str})"
 
         @defs.block global_signature do
           @defs.line "return #{d.name}(#{pass_args.join(", ")})"
         end
         return local_signature
       else
-        if namesp.empty?
+        if @current_namespace.empty?
           @forward_decl_defs.line local_signature
         else
-          @forward_decl_defs.block "namespace #{namesp}" do
+          @forward_decl_defs.block "namespace #{@current_namespace.join("::")}" do
             @forward_decl_defs.line local_signature
           end
         end

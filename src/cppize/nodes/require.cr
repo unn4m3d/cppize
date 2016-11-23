@@ -52,8 +52,8 @@ module Cppize
               end
             end
           end
-        rescue ex
-          raise Error.new(ex.message || "Error opening #{path}",node,nil,@current_filename)
+        rescue ex : Error
+          raise Error.new(ex.message || "Error opening #{path}",node,ex,@current_filename)
         end
       end.to_s
       @current_filename = old_filename

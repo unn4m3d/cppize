@@ -1,7 +1,7 @@
 require "./cppize"
 require "./colorize"
 
-transpiler = Cppize::Transpiler.new
+transpiler = Cppize::Transpiler.new false
 code = ""
 input = ""
 use_stdin = false

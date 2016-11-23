@@ -7,7 +7,7 @@ module Cppize
 
       @catched = false
 
-      def initialize(message : String, node : ASTNode? = nil, cause : typeof(self)? = nil,@real_filename : String = "<unknown>")
+      def initialize(message : String, node : ASTNode? = nil, cause : self? = nil,@real_filename : String = "<unknown>")
         @node_stack = [] of ASTNode
         if cause.is_a?(self)
           @node_stack = cause.as(self).node_stack
@@ -16,6 +16,11 @@ module Cppize
         unless node.nil?
           @node_stack.unshift(node.not_nil!)
         end
+        super message, cause
+      end
+
+      def initialize(message : String, node : ASTNode? = nil, cause : Exception? = nil,@real_filename : String = "<unknown>")
+        @node_stack = [] of ASTNode
         super message, cause
       end
 

@@ -92,11 +92,24 @@ module Cppize
     alias Scope = Hash(String, NamedTuple(symbol_type: Symbol, value: ASTNode?))
 
     @scopes = Array(Scope).new
+    @typenames = [] of Array(String)
     @unit_stack = [ {id: "::", type: :top_level} ] of UnitInfo
-    @current_namespace = ""
+    @current_namespace = [] of String
     @in_class = false
-    @current_class = ""
+    @current_class = [] of String
     @current_visibility : Visibility? = nil
+
+    protected def current_cid
+      if @current_class.empty?
+        ""
+      else
+        @current_class.zip(@typenames).map{|x| "#{x.first}< #{x.last.join(", ")} >"}.join("::")
+      end
+    end
+
+    protected def full_cid
+      (@current_namespace+[current_cid]).join("::")
+    end
 
     getter current_filename
 

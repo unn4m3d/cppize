@@ -17,62 +17,102 @@ module Cppize
     end
 
     register_node ModuleDef do
-      unit_id = tr_uid "#{@current_namespace}::#{@current_class}::#{node.name.names.join("::")}"
+      unit_id = tr_uid ([full_cid] + node.name.names).join("::")
       includes = node.search_of_type(Include)
-      ancestors = includes.size > 0 ? ": #{includes.map { |x| "public virtual " + transpile x.as(Include).name }.join(", ")}" : " : public virtual #{STDLIB_NAMESPACE}Module"
+      ancestors = includes.size > 0 ? ": #{includes.map { |x| "public virtual " + transpile x.as(Include).name }.join(", ")}" : ": public virtual #{STDLIB_NAMESPACE}Module"
       included? = false
       if options.has_key? "auto-module-type"
         included? = (@includes.count do |x|
-          x.as(Include).name.to_s.sub(/^::/,"") == (@current_namespace.empty? ? "" : @current_namespace + "::") + node.name.to_s
+          x.as(Include).name.to_s.sub(/^::/,"") == ([full_cid] + node.name.names).join("::")
         end)
       end
-      if !node.type_vars.nil?
-        @unit_types[unit_id] = :class_module
-        @unit_stack.push({id: unit_id, type: :class_module})
-        tv = node.type_vars.as(Array(String))
-        #@forward_decl_classes.line "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name}"
 
-        unless @classes.has_key? unit_id
-          if includes.empty?
-            @classes[unit_id] = ClassData.new(get_name(node.name))
-          else
-            @classes[unit_id] = ClassData.new(get_name(node.name), *(Tuple(String).from includes.map{|x| get_name(x).split(NAMES_DELIMITER)}.flatten))
-          end
-          @classes[unit_id].header= "template< #{tv.map { |x| "typename #{x}" }.join(", ")}> class #{node.name} #{ancestors}"
-        end
-        @current_visibility = nil
-        old_class, @current_class = @current_class, @current_class + "::" + node.name.to_s + "<#{tv.join(", ")}>"
-        old_in_class, @in_class = @in_class, true
-        @classes[unit_id].line transpile node.body
-        @in_class, @current_class = old_in_class, old_class
-        @unit_stack.pop
-        ""
-      elsif includes.size > 0 || included?
-        @unit_types[unit_id] = :class_module
-        @unit_stack.push({id: unit_id, type: :class_module})
-        unless @classes[get_name node.name]
-          @classes[get_name node.name] = ClassData.new(get_name(node.name), *(Tuple(String).from includes.map{|x| get_name(x).split(NAMES_DELIMITER)}.flatten))
-          @classes[get_name node.name].header= "class #{node.name} #{ancestors}"
-        end
-        @current_visibility = nil
-        old_class, @current_class = @current_class, @current_class + "::" + node.name.to_s
-        old_in_class, @in_class = @in_class, true
-        @classes[get_name node.name].line transpile node.body
-        @in_class, @current_class = old_in_class, old_class
-        @unit_stack.pop
-        ""
-      else
-        @unit_types[unit_id] = :namespace
-        @unit_stack.push({id: unit_id, type: :namespace})
-        Lines.new(@failsafe) do |l|
+      typenames = [] of String
+
+      unless node.type_vars.nil?
+        typenames += node.type_vars.not_nil!
+      end
+
+      if typenames.empty? && !included? && includes.empty? && !@in_class
+        Lines.new do |l|
           l.line nil
-          l.block "namespace #{node.name.to_s.sub(/::$/,"")}" do
-            old_namespace, @current_namespace = @current_namespace, @current_namespace + "::" + node.name.to_s
+          l.block("namespace #{node.name.names.join("::")}") do
+            @unit_stack << {id: unit_id, type: :namespace}
+            @unit_types[unit_id] = :namespace
+            @current_namespace += node.name.names
             l.line transpile node.body
-            @current_namespace = old_namespace
+            node.name.names.size.times{@current_namespace.pop}
+            @unit_stack.pop
           end
-          @unit_stack.pop
         end.to_s
+      else
+        ancestors = (includes.empty? ? ": public #{STDLIB_NAMESPACE}Module" : ": "+includes.map{|x| "public virtual #{transpile x.as(Include).name}"}.join(", "))
+        target_id = if node.name.names.size == 1
+          tr_uid full_cid
+        else
+          warning Warning::LONG_PATH do
+            warn "Please use nested classes and modules instead of long paths",node,nil,@current_filename
+          end
+          [tr_uid(full_cid),node.name.names[1..-1]].flatten.join("::")
+        end
+
+        local_template = if typenames.empty?
+          ""
+        else
+          "template< #{typenames.map{|x| "typename #{x}"}.join(", ")} > "
+        end
+
+        if @classes.has_key? target_id
+          @classes[target_id].block "#{local_template} class #{node.name.names.last}#{ancestors}" do
+            @current_class += node.name.names
+            @unit_types[unit_id] = :class_module
+            @unit_stack << {id: unit_id, type: :class_module}
+            (node.name.names.size-1).times{@typenames << [] of String}
+            @typenames << typenames
+            oic,@in_class = @in_class,true
+            @classes[target_id].line transpile node.body
+            node.name.names.size.times  do
+              @typenames.pop
+              @current_class.pop
+            end
+            @unit_stack.pop
+            @in_class = oic
+          end
+        else
+          if @in_class
+            raise Error.new "Cannot declare module as its parent is not defined",node,nil,@current_filename
+          else
+            if @classes.has_key? unit_id
+              warning Warning::REDECLARATION do
+                warn "#{unit_id} is already defined", node,nil, @current_filename
+              end
+            else
+              @classes[unit_id] ||= ClassData.new unit_id
+            end
+            if @classes[unit_id].header.empty?
+              @classes[unit_id].header = "#{local_template} class #{node.name.names.last}#{ancestors}"
+              @current_class += node.name.names
+              (node.name.names.size-1).times{@typenames << [] of String}
+              @typenames << typenames
+              oic,@in_class = @in_class,true
+              @unit_types[unit_id] = :class_module
+              @unit_stack << {id: unit_id, type: :class_module}
+              @classes[unit_id].line transpile node.body
+              @in_class = oic
+              @unit_stack.pop
+              node.name.names.size.times  do
+                @typenames.pop
+                @current_class.pop
+              end
+
+            else
+              warning Warning::REDECLARATION do
+                warn "Class #{unit_id} is already declared, skipping declaration",node,nil,@current_filename
+              end
+            end
+          end
+        end
+        ""
       end
     end
   end
