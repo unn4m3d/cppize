@@ -16,6 +16,7 @@ module Cppize
       "<=>"   => "diff",
       "**"    => "pow",
       "class" => "get_type",
+      "new"   => "__new"
     }
 
     register_node Call do

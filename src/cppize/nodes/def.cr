@@ -64,9 +64,19 @@ module Cppize
           l.line local_signature
 
           if @unit_stack.last[:type] == :class_module && options.has_key? "implicit-static"
-            _d = node.clone
-            _d.receiver = Self.new
-            l.line transpile _d
+            l.line transpile Def.new(
+              "__static_"+node.name,
+              node.args,
+              Call.new(
+                Call.new(
+                  Path.new("#{@current_class}#{@typenames.last.empty? ? "" : "<" + @typenames.last.join(", ") + " >"}"),
+                  "__new"
+                ),
+                node.name,
+                node.args.map{|x| Var.new(x.name).as(ASTNode)}
+              ),
+              Self.new
+            )
           end
 
           global_signature = "#{global_template}#{modifiers}#{def_type} #{full_cid}::#{common_signature}"
