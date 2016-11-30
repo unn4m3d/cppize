@@ -39,7 +39,12 @@ module Cppize
 
         def_type = (node.return_type ? transpile node.return_type : "auto")
 
-        modifiers = (node.receiver.is_a?(Self) ? "static " : "")
+        _marr = [] of String
+        _marr << "static" if node.receiver.is_a?(Self)
+        _marr << "virtual" if options.has_key? "all-virtual" || @attribute_set.index{|x| x.name == "Virtual" } || node.abstract?
+
+        modifiers = _marr.join(" ")
+        modifiers += " " unless _marr.empty?
 
         common_signature = "#{translate_name node.name}(#{args})"
         local_template = (typenames.size > 0 ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
@@ -140,7 +145,12 @@ module Cppize
 
       def_type = (d.return_type ? transpile d.return_type : "auto")
 
-      modifiers = (d.receiver.to_s == "self" ? "static " : "")
+      _marr = [] of String
+      _marr << "static" if d.receiver.is_a?(Self)
+      _marr << "virtual" if options.has_key? "all-virtual" || @attribute_set.index{|x| x.name == "Virtual" } || d.abstract?
+
+      modifiers = _marr.join(" ")
+      modifiers += " " unless _marr.empty?
       local_template = (typenames.size > 0 ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
 
       typenames += @typenames.flatten

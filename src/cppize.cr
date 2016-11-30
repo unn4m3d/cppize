@@ -51,6 +51,8 @@ module Cppize
       @@features.keys
     end
 
+    @attribute_set = [] of Attribute
+
     property enabled_warnings
 
     @enabled_warnings : UInt64
@@ -58,15 +60,18 @@ module Cppize
     @enabled_warnings = 0u64
 
     macro register_node(klass,&block)
-      protected def transpile(node : {{klass}}, *tr_options)
+      def transpile(node : {{klass}}, *tr_options)
         should_return? = if tr_options.size == 1 && tr_options[0]?.is_a?(Bool) # To keep and old behaviour
           tr_options[0]?
         else
           tr_options.includes?(:should_return)
         end
-        try_tr(node) do
+        %code = try_tr(node) do
           {{block.body}}
         end
+
+        @attribute_set = [] of Attribute unless node.is_a? Attribute
+        %code
       end
     end
 
@@ -171,6 +176,7 @@ module Cppize
       lines << "#define CPPIZE_NO_STD_STRING" if options.has_key? "no-std-string"
       lines << "#include <crystal/stdlib.hpp>" unless options.has_key? "no-stdlib"
       lines << "#include <cstdarg>" unless options.has_key? "no-splats"
+      lines << "using #{STDLIB_NAMESPACE.sub(/::$/,"")};" unless options.has_key? "no-stdlib" || options.has_key? "no-using-stdlib" || STDLIB_NAMESPACE.empty?
       lines.join("\n")
     end
 
