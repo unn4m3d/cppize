@@ -32,15 +32,14 @@ ImplicitObj   | :x: Not supported |
 Include       | :bangbang: Experimental |
 InstanceSizeOf| :white_check_mark: Supported |
 InstanceVar   | :white_check_mark: Supported |
-IsA           | :x: Not supported |
+IsA           | :bangbang: Experimental |
 LibDef        | :heavy_exclamation_mark: Partial |
 Macro         | :x: Not supported |
 MacroFor      | :x: Not supported |
-MacroId       | :bangbang: Experimental |
 MacroIf       | :x: Not supported |
 MagicConstant | :x: Not supported |
 ModuleDef     | :heavy_exclamation_mark: Partial |
-MultiAssign   | :x: Not supported |
+MultiAssign   | :white_check_mark: Supported |
 NamedArgument | :x: Not supported |
 NamedTupleLiteral | :x: Not supported |
 Next          | :heavy_exclamation_mark: Partial | :warning: Doesn't exits the block<br> :warning: Cannot have a value
@@ -56,7 +55,7 @@ PointerOf     | :white_check_mark: Supported | :warning: Needs to be implemented
 ProcLiteral   | :white_check_mark: Supported|
 ProcNotation  | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
 RangeLiteral  | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
-RegexLiteral  | :x: Not supported |
+RegexLiteral  | :bangbang: Experimental |
 Require       | :heavy_exclamation_mark: Partial |
 RespondsTo    | :x: Not supported |
 Return        | :heavy_exclamation_mark: Partial |
@@ -68,9 +67,8 @@ SymbolLiteral | :x: Not supported |
 TupleLiteral  | :x: Not supported |
 TypeDeclaration | :white_check_mark: Supported |
 TypeNode      | :white_check_mark: Supported |
-UnaryExpression | :x: Not supported |
 Underscore | :x: Not supported |
-UninitializedVar | :x: Not supported | :soon: Coming soon
+UninitializedVar | :x: Not supported |
 Union         | :bangbang: Experimental | :warning: Needs to be implemented in stdlib
 Unless        | :white_check_mark: Supported |
 Var           | :bangbang: Experimental |
