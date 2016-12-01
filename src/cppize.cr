@@ -70,7 +70,9 @@ module Cppize
           {{block.body}}
         end
 
-        @attribute_set = [] of Attribute unless node.is_a? Attribute
+        {% unless klass == Attribute %}
+          @attribute_set = [] of Attribute
+        {% end %}
         %code
       end
     end

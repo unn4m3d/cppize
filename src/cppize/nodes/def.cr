@@ -41,11 +41,12 @@ module Cppize
 
         _marr = [] of String
         _marr << "static" if node.receiver.is_a?(Self)
-        _marr << "virtual" if options.has_key? "all-virtual" || @attribute_set.index{|x| x.name == "Virtual" } || node.abstract?
+        if options.has_key? "all-virtual" || @attribute_set.index{|x| x.name == "Virtual" } || node.abstract?
+          _marr << "virtual"
+        end
 
         modifiers = _marr.join(" ")
         modifiers += " " unless _marr.empty?
-
         common_signature = "#{translate_name node.name}(#{args})"
         local_template = (typenames.size > 0 ? "template<#{typenames.map{|x| "typename #{x}"}.join(", ")} > " : "")
         local_signature = "#{local_template}#{modifiers}#{def_type} #{common_signature}"
