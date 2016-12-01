@@ -57,7 +57,7 @@ module Cppize
                 "(#{transpile node.obj}::#{translate_name name}(#{args}))"
               end
             else
-              "(#{transpile node.obj}.#{translate_name name}(#{args}))"
+              "(#{transpile node.obj}->#{translate_name name}(#{args}))"
             end
           end
         else

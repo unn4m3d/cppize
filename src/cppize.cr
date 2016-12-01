@@ -311,10 +311,16 @@ module Cppize
     end
 
     protected def translate_name(name : String)
-      name.sub(/^(.*)=$/) { |m| "set_#{m}" }
+      if CPP_OPERATORS.includes? name
+        "operator #{name}"
+      elsif ADDITIONAL_OPERATORS.has_key? name
+        ADDITIONAL_OPERATORS[name]
+      else
+        name.sub(/^(.*)=$/) { |m| "set_#{m}" }
           .sub(/^(.*)\?$/) { |m| "is_#{m}" }
           .sub(/^(.*)!$/) { |m| "#{m}_" }
           .gsub(/[!\?=@]/, "")
+      end
     end
 
     protected def try_tr(node : ASTNode | Visibility, &block : Proc(String))
