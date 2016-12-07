@@ -41,7 +41,7 @@ module Cppize
 
         _marr = [] of String
         _marr << "static" if node.receiver.is_a?(Self)
-        if options.has_key? "all-virtual" || @attribute_set.index{|x| x.name == "Virtual" } || node.abstract?
+        if options.has_key?("all-virtual") || @attribute_set.map(&.name).includes?("Virtual") || node.abstract?
           _marr << "virtual"
         end
 

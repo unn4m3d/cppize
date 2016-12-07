@@ -2,7 +2,6 @@ module Cppize
   class Transpiler
     register_node ClassDef do
       raw_uid = ([full_cid] + node.name.names).join("::")
-      #puts raw_uid
       unit_id = tr_uid raw_uid
       @unit_types[unit_id] = :class
       typenames = [] of String
@@ -60,10 +59,8 @@ module Cppize
         end
       end
 
-      #puts raw_uid
       typenames += @typenames.flatten
 
-      #puts typenames
 
       inherits = ([ancestor]+includes).join(", ")
 

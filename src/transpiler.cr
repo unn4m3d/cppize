@@ -16,7 +16,6 @@ OptionParser.parse! do |opts|
 
   opts.on("-v", "--version", "Prints version and exits") do
     puts "#{Cppize::VERSION}"
-    #puts "Compiled on {{ Time.now.to_s("%c") }}"
     exit
   end
 

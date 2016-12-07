@@ -1,6 +1,6 @@
 module Cppize
   class Transpiler
-    register_node Attribute do
+    register_node Attribute, :keep_attributes do
       @attribute_set << node
       ""
     end

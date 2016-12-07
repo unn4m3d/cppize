@@ -59,7 +59,7 @@ module Cppize
 
     @enabled_warnings = 0u64
 
-    macro register_node(klass,&block)
+    macro register_node(klass,*opts,&block)
       def transpile(node : {{klass}}, *tr_options)
         should_return? = if tr_options.size == 1 && tr_options[0]?.is_a?(Bool) # To keep and old behaviour
           tr_options[0]?
@@ -70,7 +70,7 @@ module Cppize
           {{block.body}}
         end
 
-        {% unless klass == Attribute %}
+        {% unless opts.includes? :keep_attributes %}
           @attribute_set = [] of Attribute
         {% end %}
         %code

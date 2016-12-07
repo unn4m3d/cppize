@@ -29,7 +29,6 @@ module Cppize
         if b_arg.responds_to?(:name)
           args += ", #{b_arg.name}"
         end
-        #puts "// #{node.name} #{node.block.nil? ? "n" : "N"}"
         if node.block
           args += "#{node.args.empty? ? "" : ","} #{transpile node.block.not_nil!}"
         end
