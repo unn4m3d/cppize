@@ -8,7 +8,7 @@ Arg           | :heavy_exclamation_mark: Partial |
 Alias         | :heavy_exclamation_mark: Partial | :warning: Specialized aliases are not supported yet
 ArrayLiteral  | :heavy_exclamation_mark: Partial | :warning: Empty array literals without type restrictions are not supported<br> :warning: Needs to be implemented in stdlib
 Assign        | :white_check_mark: Supported |
-Attribute     | :x: Not supported |
+Attribute     | :white_check_mark: Supported | :warning: Only one attribute is implemented
 BinaryOp      | :white_check_mark: Supported |
 Block         | :white_check_mark: Supported |
 BoolLiteral   | :white_check_mark: Supported | :warning: Needs to be implemented in stdlib
@@ -60,6 +60,7 @@ RegexLiteral  | :bangbang: Experimental |
 Require       | :heavy_exclamation_mark: Partial |
 RespondsTo    | :x: Not supported |
 Return        | :heavy_exclamation_mark: Partial |
+Self          | :white_check_mark: Supported |
 SizeOf        | :heavy_exclamation_mark: Partial | :warning: Behaves the same way as `InstanceSizeOf`
 Splat         | :heavy_exclamation_mark: Partial | :warning: There is no support for calls with variable number of arguments yet<br> :warning: See Splats section below
 StringInterpolation | :white_check_mark: Supported |
