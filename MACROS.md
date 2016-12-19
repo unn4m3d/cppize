@@ -49,6 +49,12 @@ This macro call turns into string literal containing cppize version string
 
 Defines given symbols
 
+### \_\_stdlib\_\_
+
+If called with block, this macro places block body into stdlib namespace (defined in `Cppize::Transpiler::STDLIB_NAMESPACE`)
+If called without block, this macro evaluates to name of stlib namespace
+
+
 ### undef
 
 Undefines given symbols
