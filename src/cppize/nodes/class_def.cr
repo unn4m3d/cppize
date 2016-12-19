@@ -88,6 +88,20 @@ module Cppize
         @current_class.pop
         @typenames.pop
       end
+      @attribute_set.each do |attr|
+        if attr.name == "Header"
+          for arg in attr.named_args
+            case arg.name
+            when "local"
+              @classes[unit_id].c_deps << %("#{arg.value.as(StringLiteral).value}")
+            when "system" || "global"
+              @classes[unit_id].c_deps << "<#{arg.value.as(StringLiteral).value}>"
+            else
+              raise Error.new("Wrong type of header : #{arg.name}",node,nil,@current_filename)
+            end
+          end
+        end
+      end
       @unit_stack.pop
       ""
     end

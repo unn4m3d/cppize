@@ -5,6 +5,7 @@ module Cppize
     property name : String
     property dep_source : ClassDataHash?
     property header : String
+    property c_deps = Array(String).new
     @lines = Lines.new
     @header = ""
 
