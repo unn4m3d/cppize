@@ -12,7 +12,7 @@ module Cppize
 
       ancestor = (node.superclass ? transpile node.superclass : "#{STDLIB_NAMESPACE}Object")
       ancestor = "public #{ancestor}"
-      includes = node.search_of_type(Include).map{|x| "public virtual #{transpile x.as(Include).name}"}
+      includes = node.search_of_type(Include).map{|x| "public virtual #{transpile x.as(Include).name}" }
 
       if node.name.names.size == 1
         if @in_class
@@ -90,7 +90,8 @@ module Cppize
       end
       @attribute_set.each do |attr|
         if attr.name == "Header"
-          for arg in attr.named_args
+          next if attr.named_args.nil?
+          attr.named_args.not_nil!.each do |arg|
             case arg.name
             when "local"
               @classes[unit_id].c_deps << %("#{arg.value.as(StringLiteral).value}")
