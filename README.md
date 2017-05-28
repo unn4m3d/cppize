@@ -8,7 +8,7 @@ Generated code can be compiled with c++14 compiler (tested with g++ 6.2.0)
 
 List of supported AST nodes can be found [here](NODES.md)
 
-You can try it [here](https://unn4m3d.github,io/cppize)
+You can try it [here](https://unn4m3d.github.io/cppize)
 
 ## CLI Usage
 
